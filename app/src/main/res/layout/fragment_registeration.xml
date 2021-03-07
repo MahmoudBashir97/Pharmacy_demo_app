@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="isPharma"
+            type="Boolean" />
+
+        <variable
+            name="isLogin"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.Registeration_Fragment"
+        android:background="#FFFFFF">
+
+        <RelativeLayout
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/to_sign_up_login"
+            android:visibility="@{isLogin? View.VISIBLE : View.GONE ,default = visible}">
+
+            <TextView
+                android:id="@+id/login_w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/main_color"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/edt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Phone no."
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="phone"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/login_back" />
+
+                <EditText
+                    android:id="@+id/edt_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Password"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="textPassword"
+                    android:background="@drawable/login_back" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Login"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/back_login_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:textAllCaps="false"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/register_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/to_sign_up_login"
+            android:visibility="@{isLogin? View.GONE : View.VISIBLE ,default = gone}">
+
+            <TextView
+                android:id="@+id/register_w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textColor="@color/main_color"
+                android:textSize="35sp"
+                android:textStyle="bold|italic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/edt_regist_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Name"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/login_back" />
+
+                <EditText
+                    android:id="@+id/edt_regist_pharma_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Address"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="text"
+                    android:background="@drawable/login_back"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="@{isPharma? View.VISIBLE : View.GONE ,default = gone}"/>
+
+                <EditText
+                    android:id="@+id/edt_regist_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Phone no."
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="phone"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/login_back" />
+
+                <EditText
+                    android:id="@+id/edt_regist_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Password"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="textPassword"
+                    android:background="@drawable/login_back" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/sign_up_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Sign Up"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/back_login_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:textAllCaps="false"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/to_sign_up_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up?"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="70dp"/>
+
+    </RelativeLayout>
+</layout>

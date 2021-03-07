@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/screen_SplashFragment">
+
+    <fragment
+        android:id="@+id/chooseStateScreenFragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.ChooseStateScreenFragment"
+        android:label="fragment_choose_state_screen"
+        tools:layout="@layout/fragment_choose_state_screen" />
+    <fragment
+        android:id="@+id/pharmacyMainScreen_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyMainScreen_Fragment"
+        android:label="fragment_pharmacy_main_screen_"
+        tools:layout="@layout/fragment_pharmacy_main_screen_" >
+
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_addNewDrug_Fragment"
+            app:destination="@id/addNewDrug_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_pharmacyNotificationList_Fragment"
+            app:destination="@id/pharmacyNotificationList_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_pharmacyRequests_Fragment2"
+            app:destination="@id/pharmacyRequests_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_pharmacy_DrugScreen_Fragment"
+            app:destination="@id/pharmacy_DrugScreen_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_screen_SplashFragment"
+            app:destination="@id/screen_SplashFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/screen_SplashFragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.ScreenSplashFragment"
+        android:label="fragment_screen__splash"
+        tools:layout="@layout/fragment_screen_splash" >
+        <action
+            android:id="@+id/action_screen_SplashFragment_to_stateChooseKotlin_Fragment"
+            app:destination="@id/stateChooseKotlin_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/screen_SplashFragment"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/addNewDrug_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.AddNewDrug_Fragment"
+        android:label="fragment_add_new_drug"
+        tools:layout="@layout/fragment_add_new_drug_" >
+        <argument
+            android:name="ph_name"
+            app:argType="string"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/pharmacyNotificationList_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyNotificationList_Fragment"
+        android:label="fragment_pharmacy_notification_list"
+        tools:layout="@layout/fragment_pharmacy_notification_list_" />
+    <fragment
+        android:id="@+id/pharmacyRequests_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyRequests_Fragment"
+        android:label="fragment_pharmacy_requests"
+        tools:layout="@layout/fragment_pharmacy_requests_" >
+        <action
+            android:id="@+id/action_pharmacyRequests_Fragment_to_requestChatPatient_to_Pharmay_Fragment"
+            app:destination="@id/requestChatPatient_to_Pharmay_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/pharmacy_DrugScreen_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Pharmacy_DrugScreen_Fragment"
+        android:label="fragment_pharmacy__drug_screen"
+        tools:layout="@layout/fragment_pharmacy__drug_screen_">
+        <argument android:name="path_type"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_name"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_img"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_mg"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_price"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="drug_tablets"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="drug_description"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="ph_phone"
+            app:argType="string"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_pharmacy_DrugScreen_Fragment_to_requestChatPatient_to_Pharmay_Fragment2"
+            app:destination="@id/requestChatPatient_to_Pharmay_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/delivery_main_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Delivery_main_Fragment"
+        android:label="fragment_delivery_main"
+        tools:layout="@layout/fragment_delivery_main_" >
+        <action
+            android:id="@+id/action_delivery_main_Fragment_to_deliveryConfirmation_Fragment"
+            app:destination="@id/deliveryConfirmation_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_delivery_main_Fragment_to_delivery_shipped_requests_Fragment"
+            app:destination="@id/delivery_shipped_requests_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_delivery_main_Fragment_to_deliveryRequests_Fragment"
+            app:destination="@id/deliveryRequests_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_delivery_main_Fragment_to_screen_SplashFragment"
+            app:destination="@id/screen_SplashFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryConfirmation_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.DeliveryConfirmation_Fragment"
+        android:label="fragment_delivery_confirmation"
+        tools:layout="@layout/fragment_delivery_confirmation_" />
+    <fragment
+        android:id="@+id/delivery_shipped_requests_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Delivery_shipped_requests_Fragment"
+        android:label="fragment_delivery_shipped_requests"
+        tools:layout="@layout/fragment_delivery_shipped_requests_" />
+    <fragment
+        android:id="@+id/patient_Path_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Patient_Path_Fragment"
+        android:label="fragment_patient__path"
+        tools:layout="@layout/fragment_patient__path_" >
+        <action
+            android:id="@+id/action_patient_Path_Fragment_to_patientNotification_Fragment"
+            app:destination="@id/patientNotification_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_patient_Path_Fragment_to_patientRequests_Fragment"
+            app:destination="@id/patientRequests_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_patient_Path_Fragment_to_patientDeliveryProgress_Fragment"
+            app:destination="@id/patientDeliveryProgress_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_patient_Path_Fragment_to_patient_to_pharmacy_details_Fragment"
+            app:destination="@id/patient_to_pharmacy_details_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_patient_Path_Fragment_to_screen_SplashFragment"
+            app:destination="@id/screen_SplashFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/patient_Path_Fragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/patientNotification_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PatientNotification_Fragment"
+        android:label="fragment_patient_notification"
+        tools:layout="@layout/fragment_patient_notification" />
+    <fragment
+        android:id="@+id/patientRequests_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PatientRequests_Fragment"
+        android:label="fragment_patient_requests"
+        tools:layout="@layout/fragment_patient_requests" />
+    <fragment
+        android:id="@+id/patientDeliveryProgress_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PatientDeliveryProgress_Fragment"
+        android:label="fragment_patient_delivery_progress"
+        tools:layout="@layout/fragment_patient_delivery_progress" />
+    <fragment
+        android:id="@+id/deliveryRequests_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.DeliveryRequests_Fragment"
+        android:label="fragment_delivery_requests"
+        tools:layout="@layout/fragment_delivery_requests" />
+    <fragment
+        android:id="@+id/registeration_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Registeration_Fragment"
+        android:label="fragment_registeration"
+        tools:layout="@layout/fragment_registeration" >
+
+        <argument android:name="regist_type"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <action
+            android:id="@+id/action_registeration_Fragment_to_verificationCode_Fragment"
+            app:destination="@id/verificationCode_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_registeration_Fragment_to_pharmacyMainScreen_Fragment"
+            app:destination="@id/pharmacyMainScreen_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/registeration_Fragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_registeration_Fragment_to_patient_Path_Fragment"
+            app:destination="@id/patient_Path_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/registeration_Fragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_registeration_Fragment_to_delivery_main_Fragment"
+            app:destination="@id/delivery_main_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/registeration_Fragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/verificationCode_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.VerificationCode_Fragment"
+        android:label="fragment_verification_code"
+        tools:layout="@layout/fragment_verification_code" >
+
+        <argument android:name="regist_type"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="address"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="phone_no"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument
+            android:name="password"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <action
+            android:id="@+id/action_verificationCode_Fragment_to_pharmacyMainScreen_Fragment"
+            app:destination="@id/pharmacyMainScreen_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_verificationCode_Fragment_to_patient_Path_Fragment"
+            app:destination="@id/patient_Path_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_verificationCode_Fragment_to_delivery_main_Fragment"
+            app:destination="@id/delivery_main_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/stateChooseKotlin_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.StateChooseKotlin_Fragment"
+        android:label="fragment_state_choose_kotlin_"
+        tools:layout="@layout/fragment_state_choose_kotlin_" >
+        <action
+            android:id="@+id/action_stateChooseKotlin_Fragment_to_pharmacyMainScreen_Fragment"
+            app:destination="@id/pharmacyMainScreen_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/stateChooseKotlin_Fragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_stateChooseKotlin_Fragment_to_registeration_Fragment"
+            app:destination="@id/registeration_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_stateChooseKotlin_Fragment_to_patient_Path_Fragment"
+            app:destination="@id/patient_Path_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_stateChooseKotlin_Fragment_to_delivery_main_Fragment"
+            app:destination="@id/delivery_main_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/patient_to_pharmacy_details_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.Patient_to_pharmacy_details_Fragment"
+        android:label="fragment_patient_to_pharmacy_details"
+        tools:layout="@layout/fragment_patient_to_pharmacy_details">
+
+        <argument android:name="ph_name"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="ph_location"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="ph_phone"
+            app:argType="string"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_patient_to_pharmacy_details_Fragment_to_pharmacy_DrugScreen_Fragment"
+            app:destination="@id/pharmacy_DrugScreen_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/requestChatPatient_to_Pharmay_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.RequestChatPatient_to_Pharmay_Fragment"
+        android:label="fragment_request_chat_patient_to_pharmay"
+        tools:layout="@layout/fragment_request_chat_patient_to_pharmay"
+        >
+        <argument
+        android:name="UserPhone"
+        app:argType="string"
+        app:nullable="false"/>
+    </fragment>
+</navigation>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:padding="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_edt_add_drug"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/not_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have a new Request"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            />
+        <Button
+            android:id="@+id/reply_now_btn"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:text="Reply Now"
+            android:background="@drawable/back_btn_reply_now"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/not_title"
+            android:layout_marginTop="15dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="today, 10:23pm"
+            android:textColor="#B2B2B2"
+            android:textSize="13sp"
+            android:layout_below="@+id/reply_now_btn"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

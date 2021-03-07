@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="isPharma"
+            type="boolean" />
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.Pharmacy_DrugScreen_Fragment"
+        android:background="#FFFFFF">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:id="@+id/rel_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/back_btn"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/drug_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Drug screen"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:layout_centerInParent="true" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_message_24"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/rel_bar"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/drug_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        android:src="@drawable/ic_panadol"
+                        android:scaleType="fitXY" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#B2B2B2"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginRight="28dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginRight="28dp">
+
+                        <TextView
+                            android:id="@+id/drug_tablets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24 tablets"
+                            android:textSize="15sp"
+                            android:textColor="@color/main_color"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/drug_mg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="500 mg"
+                            android:textSize="15sp"
+                            android:textColor="@color/main_color"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/drug_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="13.5 EGP"
+                            android:textSize="15sp"
+                            android:textColor="@color/main_color"
+                            android:layout_weight="1"
+                            android:gravity="end" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#B2B2B2"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginRight="28dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginRight="28dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Discription:"
+                            android:textColor="#000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/drug_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Panadol Advance is an advanced formulation of paracetamol that contains Optizorb. Unlike some pain relievers that can sit in your stomach, Panadol Advance starts to release its medicine in as little as 5 minutes."
+                            android:textSize="16sp"
+                            android:textColor="#777777"
+                            android:layout_marginTop="10dp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/buy_now_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Buy Now"
+                        android:textColor="#FFF"
+                        android:textSize="16sp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/add_btn_back"
+                        android:layout_marginRight="28dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginTop="130dp"
+                        android:visibility="@{isPharma? View.GONE : View.VISIBLE , default = visible}"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

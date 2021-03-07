@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/rel_drug_chat_details"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/drug_img"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_panadol"
+            android:scaleType="fitXY"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/drug_img"
+            android:weightSum="2"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/txt_drug_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drug Name"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/txt_drug_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20 EGP"
+                    android:textColor="@color/main_color"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="end">
+                <TextView
+                    android:id="@+id/txt_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UserName"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date,20/20/2021"
+                    android:textColor="#B2B2B2"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="#B2B2B2"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/prof_message_receiver"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_user_icon"
+        android:layout_marginTop="10dp"
+        app:tint="@color/black"
+        android:contentDescription="@string/app_name" />
+    <LinearLayout
+        android:id="@+id/lin_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toEndOf="@+id/prof_message_receiver"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/txt_receiver_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="15sp"
+            android:textColor="#E6E6E6"
+            />
+        <TextView
+            android:id="@+id/txt_receiver_message"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_reciever_message"
+            android:text="reciever message here"
+            android:textColor="#000"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sender_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/sender_message"
+        android:text="sender message here"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:layout_marginRight="2dp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/prof_message_sender"
+        android:layout_alignParentEnd="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_user_icon"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lin_receiver"
+        android:contentDescription="@string/app_name"
+        app:tint="@color/main_color" />
+
+    <LinearLayout
+        android:id="@+id/lin_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toStartOf="@+id/prof_message_sender"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/lin_receiver"
+        >
+        <TextView
+            android:id="@+id/txt_sender_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textSize="15sp"
+            android:textColor="#E6E6E6"
+            android:layout_gravity="end"
+            />
+        <TextView
+            android:id="@+id/txt_sender_message"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/sender_message"
+            android:text="reciever message here"
+            android:textColor="#fff"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:padding="10dp"
+            android:gravity="end"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

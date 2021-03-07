@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.AddNewDrug_Fragment"
+        android:background="#FFFFFF">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rel_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="53dp"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/back_btn"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/txt_ph_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pharmacy Name"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_add_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/rel_bar"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add drug pic"
+                        android:textSize="15sp"
+                        android:textColor="#B2B2B2"
+                        android:layout_marginTop="60dp" />
+
+                    <ImageView
+                        android:id="@+id/img_get_drug_pic"
+                        android:layout_width="74dp"
+                        android:layout_height="74dp"
+                        android:src="@drawable/add_photo"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_drug_pic_added"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:layout_below="@+id/rel_bar"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:layout_below="@+id/rel_add_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Drug name"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/edt_drug_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/back_edt_add_drug"
+                            android:textSize="18sp"
+                            android:textColor="#000"
+                            android:textColorHint="#000000"
+                            android:hint="Panadol"
+                            android:padding="8dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Drug price"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <EditText
+                                android:id="@+id/edt_drug_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:background="@drawable/back_edt_add_drug"
+                                android:textSize="18sp"
+                                android:textColor="#000"
+                                android:hint="13.5"
+                                android:textColorHint="#000000"
+                                android:padding="8dp"
+                                android:layout_weight="9" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:background="@drawable/back_edt_add_drug"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="EGP"
+                                    android:textColor="@color/main_color"
+                                    android:textSize="15sp"
+                                    android:layout_centerInParent="true" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medicine box"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <EditText
+                                android:id="@+id/edt_no_of_tablets"
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:background="@drawable/back_edt_add_drug"
+                                android:textSize="18sp"
+                                android:textColor="#000"
+                                android:hint="24"
+                                android:textColorHint="#000000"
+                                android:padding="8dp"
+                                android:layout_weight="9" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="44dp"
+                                android:background="@drawable/back_edt_add_drug"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="tablets"
+                                    android:textColor="@color/main_color"
+                                    android:textSize="15sp"
+                                    android:layout_centerInParent="true" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dicription"
+                            android:textColor="#6E6E6E"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/edt_drug_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@drawable/back_edt_add_drug"
+                            android:gravity="start"
+                            android:padding="8dp"
+                            android:hint="Type here .."
+                            android:textColorHint="#000000"
+                            android:textColor="#000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/add_newDrugs_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Add"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:background="@drawable/add_btn_back"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginBottom="30dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

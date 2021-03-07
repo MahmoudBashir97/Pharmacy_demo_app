@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.Patient_to_pharmacy_details_Fragment"
+        android:background="#FFFFFF">
+
+        <RelativeLayout
+            android:id="@+id/rel_bar"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:padding="7dp">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/txt_ph_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pharmacy Name"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="161dp"
+            android:src="@drawable/pharma"
+            android:layout_below="@+id/rel_bar"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:id="@+id/rel_contact_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/rel_bar"
+            android:layout_marginTop="140dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/open_requests"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_white_back"
+                    android:elevation="5dp"
+                    android:src="@drawable/ic_baseline_message_24"
+                    android:padding="7dp" />
+
+                <ImageView
+                    android:id="@+id/open_get_currentloc"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_white_back"
+                    android:elevation="5dp"
+                    android:src="@drawable/ic_pin"
+                    android:padding="7dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+
+                <ImageView
+                    android:id="@+id/open_phone_contacts"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_white_back"
+                    android:elevation="5dp"
+                    android:src="@drawable/phone"
+                    android:padding="7dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rel_contact_bar"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Working hours"
+                    android:textColor="#A2A2A2"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="18dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="@drawable/back_rel_calender_select">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24 / 7"
+                        android:layout_centerVertical="true"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="8dp" />
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cal_rel_back"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/calendar"
+                            android:layout_centerInParent="true" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textColor="#A2A2A2"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="18dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="@drawable/back_rel_calender_select">
+
+                    <TextView
+                        android:id="@+id/txt_ph_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="6 October Qesm 1, Sixth of October - Cairo"
+                        android:layout_centerVertical="true"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toLeftOf="@id/imgPin" />
+
+                    <RelativeLayout
+                        android:id="@+id/imgPin"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cal_rel_back"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_pin"
+                            android:layout_centerInParent="true" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile"
+                    android:textColor="#A2A2A2"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="18dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:background="@drawable/back_rel_calender_select">
+
+                    <TextView
+                        android:id="@+id/txt_ph_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="01125415641  01000321542  01251456221"
+                        android:layout_centerVertical="true"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toLeftOf="@+id/imgPhone" />
+
+                    <RelativeLayout
+                        android:id="@+id/imgPhone"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cal_rel_back"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/phone"
+                            android:layout_centerInParent="true" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Products"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_menu"
+                        android:layout_marginRight="10dp"
+                        android:contentDescription="@string/app_name"/>
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_menu" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="15dp"
+                tools:listitem="@layout/single_item_product" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
