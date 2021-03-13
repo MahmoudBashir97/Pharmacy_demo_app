@@ -1,13 +1,16 @@
 package com.mahmoudbashir.pharmacy_app.models;
 
 public class delivery_data {
+
     String del_name;
+    String email;
     String del_phone;
     String del_pass;
     String deviceToken;
 
-    public delivery_data(final String del_name, final String del_phone, final String del_pass,final String deviceToken) {
+    public delivery_data(final String del_name, final String email,final String del_phone, final String del_pass,final String deviceToken) {
         this.del_name = del_name;
+        this.email=email;
         this.del_phone = del_phone;
         this.del_pass = del_pass;
         this.deviceToken = deviceToken;
@@ -43,5 +46,13 @@ public class delivery_data {
 
     public void setDeviceToken(final String deviceToken) {
         this.deviceToken = deviceToken;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 }

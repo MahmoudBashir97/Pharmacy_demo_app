@@ -52,6 +52,7 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
+            app:popUpTo="@+id/pharmacyMainScreen_Fragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment
@@ -137,6 +138,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_pharmacy_DrugScreen_Fragment_to_paymentScreen_Fragment2"
+            app:destination="@id/paymentScreen_Fragment" />
     </fragment>
     <fragment
         android:id="@+id/delivery_main_Fragment"
@@ -315,6 +319,11 @@
             app:nullable="false"/>
 
         <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
             android:name="address"
             app:argType="string"
             app:nullable="false"/>
@@ -334,20 +343,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_verificationCode_Fragment_to_patient_Path_Fragment"
-            app:destination="@id/patient_Path_Fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_verificationCode_Fragment_to_delivery_main_Fragment"
-            app:destination="@id/delivery_main_Fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
     <fragment
         android:id="@+id/stateChooseKotlin_Fragment"
@@ -411,6 +407,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_patient_to_pharmacy_details_Fragment_to_requestChatPatient_to_Pharmay_Fragment"
+            app:destination="@id/requestChatPatient_to_Pharmay_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/requestChatPatient_to_Pharmay_Fragment"
@@ -422,5 +425,54 @@
         android:name="UserPhone"
         app:argType="string"
         app:nullable="false"/>
+        <action
+            android:id="@+id/action_requestChatPatient_to_Pharmay_Fragment_to_view_Img_Fragment"
+            app:destination="@id/view_Img_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentScreen_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PaymentScreen_Fragment"
+        android:label="fragment_payment_screen"
+        tools:layout="@layout/fragment_payment_screen" >
+        <argument android:name="drug_name"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_img"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_mg"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_price"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_tablets"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="drug_description"
+            app:argType="string"
+            app:nullable="false"/>
+        <argument android:name="ph_phone"
+            app:argType="string"
+            app:nullable="false"/>
+        <action
+            android:id="@+id/action_paymentScreen_Fragment_to_patient_Path_Fragment"
+            app:destination="@id/patient_Path_Fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/paymentScreen_Fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/view_Img_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.View_Img_Fragment"
+        android:label="fragment_view__img"
+        tools:layout="@layout/fragment_view__img">
+        <argument android:name="imgUri"
+            app:argType="string"
+            app:nullable="false"/>
     </fragment>
 </navigation>

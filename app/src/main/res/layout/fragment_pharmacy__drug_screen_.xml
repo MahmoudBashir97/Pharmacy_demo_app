@@ -47,11 +47,14 @@
                         android:layout_centerInParent="true" />
 
                     <ImageView
+                        android:id="@+id/to_chat_btn"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:src="@drawable/ic_baseline_message_24"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:visibility="@{isPharma? View.GONE : View.VISIBLE, default = gone}"
+                        />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -109,7 +112,7 @@
                             android:id="@+id/drug_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="13.5 EGP"
+                            android:text="13.5 "
                             android:textSize="15sp"
                             android:textColor="@color/main_color"
                             android:layout_weight="1"

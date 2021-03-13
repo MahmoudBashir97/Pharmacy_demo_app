@@ -6,7 +6,7 @@
     android:layout_margin="10dp"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,11 +14,13 @@
         android:background="@drawable/back_shipped_deliver_req"
         >
         <RelativeLayout
+            android:id="@+id/rel1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             >
             <TextView
+                android:id="@+id/txt_drug_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Panadol Advance"
@@ -27,9 +29,10 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/txt_drug_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="13.5 EGP"
+                android:text="13.5 "
                 android:textColor="@color/main_color"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -38,13 +41,16 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ln"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="5dp"
+            android:layout_below="@+id/rel1"
             >
             <TextView
+                android:id="@+id/txt_drug_tablets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="24 tablets"
@@ -62,22 +68,24 @@
                 android:layout_marginRight="10dp"/>
         </LinearLayout>
 
-        <RelativeLayout
+
+        <Button
+            android:id="@+id/change_status_btn"
             android:layout_width="161dp"
             android:layout_height="34dp"
             android:background="@drawable/back_st_shipped_req"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Shipment Delivered"
-                android:textSize="15sp"
-                android:textColor="@color/main_color"/>
-        </RelativeLayout>
+            android:layout_marginBottom="10dp"
+            android:text="Shipment Delivered"
+            android:textSize="15sp"
+            android:textColor="@color/main_color"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:layout_below="@+id/ln"
+            android:layout_centerInParent="true"
+            />
 
         <RelativeLayout
+            android:layout_below="@+id/change_status_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -101,10 +109,12 @@
                 android:layout_marginTop="50dp">
 
                 <ImageView
+                    android:id="@+id/img_booked"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_right"/>
+                    android:src="@drawable/ic_baseline_check_circle_24"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,9 +143,10 @@
                 android:layout_marginLeft="50dp"
                 >
                 <ImageView
+                    android:id="@+id/img_transit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_right"
+                    android:src="@drawable/ic_baseline_check_circle_24"
                     android:layout_marginBottom="10dp"
                     />
                 <TextView
@@ -157,6 +168,7 @@
             </LinearLayout>
 
             <ProgressBar
+                android:id="@+id/delivered_prog"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -178,29 +190,24 @@
                 >
 
                 <ImageView
+                    android:id="@+id/img_delivered"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_right" />
+                    android:src="@drawable/ic_baseline_check_circle_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
-                    android:text="Shipment Booked"
+                    android:text="Shipment\nDelivered"
                     android:textColor="#000000"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#A7A7A7"
-                    android:textSize="14sp" />
             </LinearLayout>
 
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

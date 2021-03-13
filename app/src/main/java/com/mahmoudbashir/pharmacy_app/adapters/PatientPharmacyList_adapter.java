@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.fragments.Patient_Path_FragmentDirections;
@@ -13,6 +14,7 @@ import com.mahmoudbashir.pharmacy_app.models.PharmacyListPatient_model;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -39,9 +41,11 @@ public class PatientPharmacyList_adapter extends RecyclerView.Adapter<PatientPha
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        String dist_txt = "Distance "+mlist.get(position).getPh_distance()+"km";
         holder.pharma_name.setText(mlist.get(position).getPh_name());
-        Picasso.get().load(mlist.get(position).getImage_uri()).into(holder.img_pharma);
+        holder.txt_distance.setText(dist_txt);
+        //Picasso.get().load(mlist.get(position).getImage_uri()).placeholder(R.drawable.ic_launcher_background).into(holder.img_pharma);
+        Picasso.get().load(R.drawable.ph_pic).placeholder(R.drawable.ic_launcher_background).into(holder.img_pharma);
 
         holder.itemView.setOnClickListener(v -> {
             NavDirections act = Patient_Path_FragmentDirections.Companion.actionPatientPathFragmentToPatientToPharmacyDetailsFragment(
@@ -51,6 +55,7 @@ public class PatientPharmacyList_adapter extends RecyclerView.Adapter<PatientPha
             );
             Navigation.findNavController(v).navigate(act);
         });
+
     }
 
     @Override
@@ -61,12 +66,13 @@ public class PatientPharmacyList_adapter extends RecyclerView.Adapter<PatientPha
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img_pharma;
-        TextView pharma_name;
+        TextView pharma_name,txt_distance;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img_pharma = itemView.findViewById(R.id.img_pharma);
             pharma_name = itemView.findViewById(R.id.pharma_name);
+            txt_distance = itemView.findViewById(R.id.txt_distance);
         }
     }
 }

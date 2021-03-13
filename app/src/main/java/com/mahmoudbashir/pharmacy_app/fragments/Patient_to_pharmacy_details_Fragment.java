@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -65,6 +66,13 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
 
         detailsBinding.backBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigateUp();
+        });
+
+        detailsBinding.openChatRequests.setOnClickListener(v -> {
+            NavDirections act = Patient_to_pharmacy_details_FragmentDirections.Companion.actionPatientToPharmacyDetailsFragmentToRequestChatPatientToPharmayFragment(
+                   ph_phone
+            );
+            Navigation.findNavController(v).navigate(act);
         });
 
         return detailsBinding.getRoot();

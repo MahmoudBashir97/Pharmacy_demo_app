@@ -47,18 +47,19 @@
                 android:layout_marginRight="30dp">
 
                 <EditText
-                    android:id="@+id/edt_phone"
+                    android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="Phone no."
+                    android:hint="Email"
                     android:textSize="18sp"
                     android:textColorHint="@color/main_color"
                     android:textColor="#000"
                     android:gravity="center_vertical"
                     android:padding="5dp"
-                    android:inputType="phone"
+                    android:inputType="textEmailAddress"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/login_back" />
+                    android:background="@drawable/login_back"
+                    android:visibility="visible"/>
 
                 <EditText
                     android:id="@+id/edt_pass"
@@ -133,6 +134,21 @@
                     android:background="@drawable/login_back" />
 
                 <EditText
+                    android:id="@+id/edt_regist_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Email"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/main_color"
+                    android:textColor="#000"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/login_back"
+                    />
+
+                <EditText
                     android:id="@+id/edt_regist_pharma_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -192,7 +208,6 @@
                 android:layout_marginBottom="60dp"
                 android:textAllCaps="false"/>
         </RelativeLayout>
-
 
         <TextView
             android:id="@+id/to_sign_up_login"

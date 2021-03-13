@@ -113,6 +113,14 @@
             android:textStyle="normal"
             android:textSize="14sp"
             android:padding="10dp"/>
+        <ImageView
+            android:id="@+id/receiver_message_img"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:src="@drawable/ic_panadol"
+            android:background="@drawable/ic_reciever_message"
+            android:scaleType="fitXY"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <TextView
@@ -171,6 +179,15 @@
             android:textSize="14sp"
             android:padding="10dp"
             android:gravity="end"/>
+
+        <ImageView
+            android:id="@+id/sender_message_img"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:src="@drawable/ic_panadol"
+            android:background="@drawable/sender_message"
+            android:scaleType="fitXY"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

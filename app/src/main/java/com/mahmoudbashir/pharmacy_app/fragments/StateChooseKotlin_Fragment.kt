@@ -46,7 +46,7 @@ class StateChooseKotlin_Fragment : Fragment() {
 
         FirebaseApp.initializeApp(requireContext())
         auth = FirebaseAuth.getInstance()
-        val user = (auth ?: return null).currentUser
+        //val user = (auth ?: return null).currentUser
 
 
         stateChooseBinding.toPharmaBtn.setOnClickListener {

@@ -14,10 +14,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mahmoudbashir.pharmacy_app.Int_erFace.delivery_accept_requestsInterface;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.fragments.Delivery_main_Fragment;
 import com.mahmoudbashir.pharmacy_app.fragments.Delivery_main_FragmentDirections;
 import com.mahmoudbashir.pharmacy_app.models.RequestData;
+import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,9 +36,13 @@ public class Delivery_RequestAdapter extends RecyclerView.Adapter<Delivery_Reque
     Context context;
     List<RequestData> mlist = new ArrayList<>();
     DatabaseReference reference;
-    public Delivery_RequestAdapter(final Context context, final List<RequestData> mlist) {
+    delivery_accept_requestsInterface accept_requestsInterface;
+    public Delivery_RequestAdapter(final Context context,
+                                   final List<RequestData> mlist,
+            delivery_accept_requestsInterface accept_requestsInterface) {
         this.context = context;
         this.mlist = mlist;
+        this.accept_requestsInterface = accept_requestsInterface;
     }
 
     @NonNull
@@ -49,42 +55,15 @@ public class Delivery_RequestAdapter extends RecyclerView.Adapter<Delivery_Reque
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.reply_now_btn.setOnClickListener(v -> {
-            reference = FirebaseDatabase.getInstance().getReference("Requests");
-            AlertDialog.Builder builder =new AlertDialog.Builder(context);
-            builder.setTitle("Configuration");
-            builder.setMessage("Confirm This Drug Request!");
-            builder.setCancelable(false);
-            builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String reqId = mlist.get(position).getRequestId();
-                    Map upData = new HashMap();
-                    upData.put("status","shipped");
-                    reference.child(reqId).updateChildren(upData).addOnCompleteListener(new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()){
-                                NavDirections act = Delivery_main_FragmentDirections.Companion.actionDeliveryMainFragmentToDeliveryShippedRequestsFragment();
-                                Navigation.findNavController(v).navigate(act);
-                            }
-                        }
-                    });
-                }
-            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    builder.setCancelable(true);
-                }
-            }).show();
-        });
+            String reqId = mlist.get(position).getRequestId();
+            accept_requestsInterface.updateRequestState(reqId);
+            });
     }
 
     @Override
     public int getItemCount() {
         return mlist.size();
     }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         Button reply_now_btn;
         public ViewHolder(@NonNull View itemView) {

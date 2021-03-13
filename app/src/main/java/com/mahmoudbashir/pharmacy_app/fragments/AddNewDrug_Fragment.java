@@ -77,6 +77,8 @@ public class AddNewDrug_Fragment extends Fragment {
         newDrugBinding.imgGetDrugPic.setOnClickListener(v -> {
         openImage();
         });
+
+
         //back_btn
         newDrugBinding.backBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigateUp();
@@ -137,6 +139,8 @@ public class AddNewDrug_Fragment extends Fragment {
             }
         }
     }
+
+    // upload drug data to database
     private void UploadDrugData(String drug_name,String drug_price,String drug_tablets,String drug_desc){
         fileStorageReference =myStorageRef.child(
                 System.currentTimeMillis()+

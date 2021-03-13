@@ -10,14 +10,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.mahmoudbashir.pharmacy_app.MainActivity;
+import com.mahmoudbashir.pharmacy_app.ui.MainActivity;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 

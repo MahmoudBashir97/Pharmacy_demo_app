@@ -1,4 +1,4 @@
-package com.mahmoudbashir.pharmacy_app;
+package com.mahmoudbashir.pharmacy_app.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavAction;
@@ -9,6 +9,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+
+import com.mahmoudbashir.pharmacy_app.R;
 
 
 public class MainActivity extends AppCompatActivity {

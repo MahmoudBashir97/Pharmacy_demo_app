@@ -89,99 +89,41 @@ public class Pharmacy_DrugScreen_Fragment extends Fragment {
             Navigation.findNavController(v).navigateUp();
         });
 
+
         if (pathType.equals("pharma")){
             drugScreenBinding.setIsPharma(true);
         }else {
             drugScreenBinding.setIsPharma(false);
 
+            drugScreenBinding.toChatBtn.setOnClickListener(v -> {
+
+                NavDirections act = Pharmacy_DrugScreen_FragmentDirections.Companion.actionPharmacyDrugScreenFragmentToRequestChatPatientToPharmayFragment2(
+                        ph_phone
+                );
+                Navigation.findNavController(v).navigate(act);
+            });
+
             drugScreenBinding.buyNowBtn.setOnClickListener(v -> {
-
-                getPharmaToken.child("pharmacy_list").child(ph_phone).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            if (snapshot.hasChildren()){
-                                pharmaToken = snapshot.child("deviceToken").getValue().toString();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-
-                DatabaseReference random ;
-                random = FirebaseDatabase.getInstance().getReference("patient");
-                random.child("patient_list").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot datas: snapshot.getChildren()){
-                           // RandKey=datas.getKey();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                RandKey = random.push().getKey();
-                AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
                 builder.setTitle("Configuration");
                 builder.setMessage("Confirm This Drug Request!");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // send request data to delivery and pharmacy
-                        // here we use FCM
-                        Map requestData = new HashMap();
-
-                        requestData.put("drug_name",drug_name);
-                        requestData.put("drug_img",drug_img);
-                        requestData.put("drug_price",drug_price);
-                        requestData.put("drug_mg",drug_mg);
-                        requestData.put("drug_tablets",drug_tablets);
-                        requestData.put("drug_description",drug_description);
-                        requestData.put("ph_phone",ph_phone);
-                        requestData.put("distance",80+"");
-                        requestData.put("status","pending");
-                        requestData.put("requestId",RandKey);
-                        requestData.put("patientId",SharedPrefranceManager.getInastance(getContext()).getUser_Phone());
-
-                        RequestData reqData = new RequestData();
-                        reqData.setDrug_name(drug_name);
-                        reqData.setDrug_img(drug_img);
-                        reqData.setDrug_price(drug_price);
-                        reqData.setDrug_mg(drug_mg);
-                        reqData.setDrug_tablets(drug_tablets);
-                        reqData.setDrug_description(drug_description);
-                        reqData.setPh_phone(ph_phone);
-                        reqData.setStatus("pending");
-                        reqData.setRequestId(RandKey);
-                        reqData.setDistance(80+"");
-                        reqData.setPatientId(SharedPrefranceManager.getInastance(getContext()).getUser_Phone());
-
-                        requestsRef.child(RandKey).setValue(requestData).addOnCompleteListener(
-                                new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-                                            NavDirections act = Pharmacy_DrugScreen_FragmentDirections.Companion.actionPharmacyDrugScreenFragmentToRequestChatPatientToPharmayFragment2(
-                                                    ph_phone
-                                            );
-                                            Navigation.findNavController(v).navigate(act);
-                                            pusDataToFCM(pharmaToken,reqData);
-                                        }
-                                    }
-                                }
+                        // navigate to payment screen
+                        NavDirections act = Pharmacy_DrugScreen_FragmentDirections.Companion.actionPharmacyDrugScreenFragmentToPaymentScreenFragment2(
+                                drug_name,
+                                drug_img,
+                                drug_mg,
+                                drug_price,
+                                drug_tablets,
+                                drug_description,
+                                ph_phone
                         );
+                        Navigation.findNavController(v).navigate(act);
                     }
+
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -201,27 +143,4 @@ public class Pharmacy_DrugScreen_Fragment extends Fragment {
         return drugScreenBinding.getRoot();
     }
 
-    private void pusDataToFCM(String phToken,RequestData requestData){
-
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(BaseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        api_Interface iterfaceCall=retrofit.create(api_Interface.class);
-
-        Call<RequestData> call = iterfaceCall.storedata(requestData);
-        call.enqueue(new Callback<RequestData>() {
-            @Override
-            public void onResponse(Call<RequestData> call, Response<RequestData> response) {
-                RequestData sendResponse = response.body();
-                Log.e("send", "sendResponse --> " + response);
-            }
-
-            @Override
-            public void onFailure(Call<RequestData> call, Throwable t) {
-                t.getMessage();
-            }
-        });
-    }
 }

@@ -24,12 +24,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mahmoudbashir.pharmacy_app.R;
+import com.mahmoudbashir.pharmacy_app.fragments.RequestChatPatient_to_Pharmay_FragmentDirections;
 import com.mahmoudbashir.pharmacy_app.models.Messages;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -75,6 +78,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.senderMessagetext.setVisibility(View.GONE);
         holder.prof_message_sender.setVisibility(View.GONE);
         holder.prof_message_receiver.setVisibility(View.GONE);
+        holder.sender_message_img.setVisibility(View.GONE);
+        holder.receiver_message_img.setVisibility(View.GONE);
 
 
         if (fromMessageType.equals("text")) {
@@ -104,18 +109,36 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             }
 
-        }
-        /*else if (fromMessageType.equals("image")){
-            if (fromUserID.equals(messageSenderId)){
-                //holder.messageSenderpic.setVisibility(View.VISIBLE);
-               // Picasso.get().load(messages.getMessage()).resize(300,300).centerInside().into(holder.messageSenderpic);
-            }else {
+        }else if (fromMessageType.equals("image")){
+            if (fromUserID.equals(SenderID)){
+                holder.lin_sender.setVisibility(View.VISIBLE);
+                holder.prof_message_sender.setVisibility(View.VISIBLE);
+                holder.txt_sender_name.setText(userName);
+                holder.sender_message_img.setVisibility(View.VISIBLE);
+               Picasso.get().load(messages.getMessage()).resize(300,300).centerInside().into(holder.sender_message_img);
 
-                //holder.recieverprof_img.setVisibility(View.VISIBLE);
-                //holder.messageRecieverpic.setVisibility(View.VISIBLE);
-                //Picasso.get().load(messages.getMessage()).resize(300,300).centerInside().into(holder.messageRecieverpic);
+                holder.sender_message_img.setOnClickListener(v -> {
+                    NavDirections act = RequestChatPatient_to_Pharmay_FragmentDirections.Companion.actionRequestChatPatientToPharmayFragmentToViewImgFragment(
+                            messages.getMessage()
+                    );
+                    Navigation.findNavController(v).navigate(act);
+                });
+
+            }else {
+                holder.lin_receiver.setVisibility(View.VISIBLE);
+                holder.prof_message_receiver.setVisibility(View.VISIBLE);
+                holder.receiver_message_img.setVisibility(View.VISIBLE);
+                Picasso.get().load(messages.getMessage()).resize(300,300).centerInside().into(holder.receiver_message_img);
+                holder.receiver_message_img.setOnClickListener(v -> {
+                    NavDirections act = RequestChatPatient_to_Pharmay_FragmentDirections.Companion.actionRequestChatPatientToPharmayFragmentToViewImgFragment(
+                            messages.getMessage()
+                    );
+                    Navigation.findNavController(v).navigate(act);
+                });
             }
-        }*/
+        }
+
+
 
     }
 
@@ -128,7 +151,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         TextView senderMessagetext ,recieverMessagetext,text_message_time_reciever,text_message_time_sender,txt_sender_name,txt_receiver_name;
         LinearLayout lin_sender,lin_receiver;
-        ImageView prof_message_sender,prof_message_receiver;
+        ImageView prof_message_sender,prof_message_receiver,receiver_message_img,sender_message_img;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -140,6 +163,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             recieverMessagetext=itemView.findViewById(R.id.txt_receiver_message);
             txt_sender_name=itemView.findViewById(R.id.txt_sender_name);
             txt_receiver_name=itemView.findViewById(R.id.txt_receiver_name);
+            receiver_message_img=itemView.findViewById(R.id.receiver_message_img);
+            sender_message_img=itemView.findViewById(R.id.sender_message_img);
 
 
             //text_message_time_reciever=itemView.findViewById(R.id.text_message_time_reciever);

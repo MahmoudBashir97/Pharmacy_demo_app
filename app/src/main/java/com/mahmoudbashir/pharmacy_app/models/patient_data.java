@@ -3,12 +3,14 @@ package com.mahmoudbashir.pharmacy_app.models;
 public class patient_data {
 
     String patient_name;
+    String patient_email;
     String patient_phone;
     String patient_pass;
     String deviceToken;
 
-    public patient_data(final String patient_name, final String patient_phone, final String patient_pass,final String deviceToken) {
+    public patient_data(final String patient_name, final String patient_email, final String patient_phone, final String patient_pass,final String deviceToken) {
         this.patient_name = patient_name;
+        this.patient_email = patient_email;
         this.patient_phone = patient_phone;
         this.patient_pass = patient_pass;
         this.deviceToken = deviceToken;
@@ -44,5 +46,13 @@ public class patient_data {
 
     public void setDeviceToken(final String deviceToken) {
         this.deviceToken = deviceToken;
+    }
+
+    public String getPatient_email() {
+        return this.patient_email;
+    }
+
+    public void setPatient_email(final String patient_email) {
+        this.patient_email = patient_email;
     }
 }

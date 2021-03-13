@@ -34,6 +34,8 @@ import com.mahmoudbashir.pharmacy_app.models.PharmacyListPatient_model;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -48,6 +50,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
 
     PharmacyListPatient_model listPatient_model;
     List<PharmacyListPatient_model> modelList = new ArrayList<>();
+
     PatientPharmacyList_adapter pharmacyListAdapter;
     View v;
     ProgressBar prog_bar;
@@ -83,9 +86,9 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
             Navigation.findNavController(v1).navigate(act);
         });
         //to retreive all pharmacy list
-        modelList.clear();
         getPharmacyList();
-
+        pharmacyListAdapter = new PatientPharmacyList_adapter(getContext(),modelList);
+        recPharmacyList.setAdapter(pharmacyListAdapter);
 
         return v;
     }
@@ -113,6 +116,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
     }
 
     private void getPharmacyList(){
+        modelList.clear();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -123,18 +127,22 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
                             String ph_phone= sn.child("ph_phone").getValue().toString();
                             String ph_location= sn.child("ph_location").getValue().toString();
                             String image_uri= sn.child("image_uri").getValue().toString();
-
+                            int ph_distance = Integer.parseInt(sn.child("ph_distance").getValue().toString());
                             listPatient_model = new PharmacyListPatient_model(
                                     ph_name,
                                     ph_phone,
                                     ph_location,
-                                    image_uri
+                                    image_uri,
+                                    ph_distance
                             );
-                        }
                             modelList.add(listPatient_model);
+                        }
+                        // for sort data from minmum to max dist
+                        Collections.sort(modelList);
+
+                        //reorderRecyclerView();
                         prog_bar.setVisibility(View.GONE);
-                        pharmacyListAdapter = new PatientPharmacyList_adapter(getContext(),modelList);
-                        recPharmacyList.setAdapter(pharmacyListAdapter);
+                        pharmacyListAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -144,5 +152,22 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
 
             }
         });
+    }
+
+    private void reorderRecyclerView(){
+        int[] a=new int[modelList.size()];
+        if (modelList.size()>0){
+        for (int i=0;i<modelList.size();i++){
+            a[i] = modelList.get(i).getPh_distance();
+        }
+        Arrays.sort(a);
+        for (int x=0;x<a.length;x++){
+            if (a[x] == modelList.get(x).getPh_distance()){
+            modelList.add(x,modelList.get(x));
+            }else {
+                modelList.add(x+1,modelList.get(x+1));
+            }
+        }
+    }
     }
 }

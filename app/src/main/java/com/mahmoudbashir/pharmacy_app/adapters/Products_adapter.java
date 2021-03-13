@@ -52,7 +52,7 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.View
 
         Picasso.get().load(mlist.get(position).getImage_uri()).into(holder.img_product);
         holder.txt_product_name.setText(mlist.get(position).getDrug_name());
-        holder.txt_product_price.setText(mlist.get(position).getDrug_price()+" EGP");
+        holder.txt_product_price.setText(mlist.get(position).getDrug_price());
         holder.txt_ph_name.setText(SharedPrefranceManager.getInastance(context).getPh_Name());
         if (path_type.equals("pharma")){
        holder.itemView.setOnClickListener(v -> {
@@ -61,7 +61,7 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.View
                     mlist.get(position).getDrug_name(),
                     mlist.get(position).getImage_uri(),
                     "0",
-                    mlist.get(position).getDrug_price()+" EGP",
+                    mlist.get(position).getDrug_price(),
                     mlist.get(position).getDrug_tablets(),
                     mlist.get(position).getDrug_description(),
                     ph_phone
@@ -75,7 +75,7 @@ public class Products_adapter extends RecyclerView.Adapter<Products_adapter.View
                         mlist.get(position).getDrug_name(),
                         mlist.get(position).getImage_uri(),
                         "0",
-                        mlist.get(position).getDrug_price()+" EGP",
+                        mlist.get(position).getDrug_price(),
                         mlist.get(position).getDrug_tablets(),
                         mlist.get(position).getDrug_description(),
                         ph_phone

@@ -87,7 +87,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13.5 EGP"
+                        android:text="13.5 "
                         android:textSize="15sp"
                         android:textColor="@color/main_color"
                         android:layout_weight="1"

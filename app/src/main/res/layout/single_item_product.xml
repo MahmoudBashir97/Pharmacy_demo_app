@@ -39,7 +39,7 @@
             android:id="@+id/txt_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14.0 EGP"
+            android:text="14.0 "
             android:textSize="15sp"
             android:textColor="#2DD66A"
             android:layout_margin="5dp"/>

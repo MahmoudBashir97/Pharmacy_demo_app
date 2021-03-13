@@ -1,5 +1,8 @@
 package com.mahmoudbashir.pharmacy_app.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +29,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.adapters.MessageAdapter;
 import com.mahmoudbashir.pharmacy_app.databinding.FragmentRequestChatPatientToPharmayBinding;
@@ -47,6 +55,9 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
     private final List<Messages> messagesList=new ArrayList<>();
     private MessageAdapter adapter;
     private String userName,pharma_name;
+    Uri fileUri;
+    UploadTask uploadTask;
+    String imgUri="";
 
     public RequestChatPatient_to_Pharmay_Fragment() {
         // Required empty public constructor
@@ -78,7 +89,9 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
         requestChatBinding.backBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigateUp();
         });
-
+        requestChatBinding.btnSendImages.setOnClickListener(v -> {
+            OpenImage();
+        });
 
 
         RetrievePharmacyData();
@@ -91,8 +104,114 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
 
         requestChatBinding.recRequestChat.setHasFixedSize(true);
 
+
+
+
         return requestChatBinding.getRoot();
     }
+
+    private void OpenImage(){
+        Intent intent=new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent.createChooser(intent,"Select Image"),438);
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==438 && resultCode== Activity.RESULT_OK && data!=null && data.getData()!=null) {
+
+            fileUri=data.getData();
+
+            StorageReference chatImagesRef = FirebaseStorage.getInstance().getReference().child("chat_images");
+            DatabaseReference random ;
+            random = FirebaseDatabase.getInstance().getReference("patient");
+            random.child("patient_list").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            String messageSendRef = "Messages/" + messageSenderID + "/" + messageRecieverID;
+            String messageRecieveRef = "Messages/" + messageRecieverID + "/" + messageSenderID;
+
+            DatabaseReference userMessageKeyRef = rootRef.child("Messages").child(messageSenderID)
+                    .child(messageRecieverID).push();
+
+            String checker = "image";
+            String messagePushID =random.push().getKey();
+            final StorageReference filepath=chatImagesRef.child(messagePushID+ "." +"jpg");
+            uploadTask = filepath.putFile(fileUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw task.getException();
+                    }
+                    return filepath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()){
+                        Uri downloaduri=task.getResult();
+                        imgUri=downloaduri.toString();
+
+                        Map messageTextBody = new HashMap();
+                        messageTextBody.put("message", imgUri);
+                        messageTextBody.put("type", "image");
+                        messageTextBody.put("from", messageSenderID);
+
+                        messageTextBody.put("to", messageRecieverID);
+                        messageTextBody.put("messageID", messagePushID);
+                        messageTextBody.put("time", saveCurrentTime);
+                        messageTextBody.put("date", saveCurrentDate);
+                        messageTextBody.put("name", SharedPrefranceManager.getInastance(getContext()).getUser_Name());
+
+
+                        Map messageBodyDetails = new HashMap();
+                        messageBodyDetails.put(messageSendRef + "/" + messagePushID, messageTextBody);
+                        messageBodyDetails.put(messageRecieveRef + "/" + messagePushID, messageTextBody);
+
+                        //rootRef.setValue(messageBodyDetails).
+
+                        rootRef.child(messageSenderID).child(messageRecieverID).child(messagePushID).setValue(messageTextBody).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()) {
+                                    messageRefReceiver.child(messageRecieverID).child(messageSenderID).child(messagePushID).setValue(messageTextBody).addOnCompleteListener(
+                                            new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    Log.e("Send message", "Message Sent Successfully...");
+                                                }
+                                            }
+                                    );
+                                } else {
+                                    Toast.makeText(getContext(), "Error!!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                requestChatBinding.inputMessage.setText("");
+                            }
+                        });
+
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        }
 
     private void sendMessage(){
 

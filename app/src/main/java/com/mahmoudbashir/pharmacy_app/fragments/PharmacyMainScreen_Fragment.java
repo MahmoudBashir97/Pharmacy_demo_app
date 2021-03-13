@@ -135,11 +135,11 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
                 Navigation.findNavController(getView()).navigate(act);
                 break;
             case R.id.logout_btn:
+                SharedPrefranceManager.getInastance(getContext()).saveUser("","","","");
                 SharedPrefranceManager.getInastance(getContext()).clearUser();
                 auth.signOut();
                 NavDirections act1 = PharmacyMainScreen_FragmentDirections.Companion.actionPharmacyMainScreenFragmentToScreenSplashFragment();
                 Navigation.findNavController(getView()).navigate(act1);
-
                 break;
         }
         return true;

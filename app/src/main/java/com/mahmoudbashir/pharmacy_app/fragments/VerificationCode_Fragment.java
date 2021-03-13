@@ -1,5 +1,6 @@
 package com.mahmoudbashir.pharmacy_app.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import com.mahmoudbashir.pharmacy_app.models.patient_data;
 import com.mahmoudbashir.pharmacy_app.models.pharmacy_data;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
@@ -43,7 +45,7 @@ public class VerificationCode_Fragment extends Fragment {
     private static final String TAG = "VerificationCode_Fragme";
 
     FragmentVerificationCodeBinding codeBinding;
-    String regist_type,name,address,phone,pass;
+    String regist_type,name,email,address,phone,pass;
     String Phone_no;
 
     DatabaseReference pharma_ref,delivery_ref,patient_ref;
@@ -52,6 +54,8 @@ public class VerificationCode_Fragment extends Fragment {
 
     String mverificationId;
     PhoneAuthProvider.ForceResendingToken mResendtoken;
+
+    private int vfCode = 222333;
     public VerificationCode_Fragment() {
         // Required empty public constructor
     }
@@ -63,6 +67,7 @@ public class VerificationCode_Fragment extends Fragment {
         codeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_verification_code, container, false);
         regist_type = VerificationCode_FragmentArgs.fromBundle(getArguments()).getRegistType();
         name = VerificationCode_FragmentArgs.fromBundle(getArguments()).getName();
+        email = VerificationCode_FragmentArgs.fromBundle(getArguments()).getEmail();
         address = VerificationCode_FragmentArgs.fromBundle(getArguments()).getAddress();
         phone = VerificationCode_FragmentArgs.fromBundle(getArguments()).getPhoneNo();
         pass = VerificationCode_FragmentArgs.fromBundle(getArguments()).getPassword();
@@ -77,7 +82,7 @@ public class VerificationCode_Fragment extends Fragment {
         delivery_ref = FirebaseDatabase.getInstance().getReference("delivery");
         patient_ref = FirebaseDatabase.getInstance().getReference("patient");
 
-        PhoneAuthOptions options =
+       /* PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(Phone_no)
                         .setTimeout(60L, TimeUnit.SECONDS)
@@ -85,23 +90,43 @@ public class VerificationCode_Fragment extends Fragment {
                         .setCallbacks(mCallbacks)
                         .build();
 
-        PhoneAuthProvider.verifyPhoneNumber(options);
+        PhoneAuthProvider.verifyPhoneNumber(options);*/
 
         codeBinding.verifyBtn.setOnClickListener(v -> {
             String st_code  = codeBinding.edtVerifyCode.getText().toString();
-            if (st_code.isEmpty() || st_code.length()<6){
+            int code = Integer.parseInt(st_code);
+            if (st_code.isEmpty() || st_code.length()<4){
                codeBinding.edtVerifyCode.setError("Please Enter Correct Code!");
                codeBinding.edtVerifyCode.requestFocus();
                return;
             }
-            verifycode(st_code,Phone_no);
+
+            if (code == vfCode){
+                if (regist_type.equals("pharma")){
+                    mAuth.createUserWithEmailAndPassword(email,pass)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()){
+                                        PharmaRef(name,email,Phone_no,address,pass);
+                                    }
+                                }
+                            });
+                }/*else if (regist_type.equals("delivery")){
+                    DeliveryRef(name,Phone_no,pass);
+                }else if (regist_type.equals("patient")){
+                    PatientRef(name,Phone_no,pass);
+                }*/
+            }
+            //verifycode(st_code,Phone_no);
         });
 
-        Toast.makeText(getContext(), "phone : "+ Phone_no, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getContext(), "phone : "+ Phone_no, Toast.LENGTH_SHORT).show();
 
         return codeBinding.getRoot();
     }
 
+    /*
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
@@ -155,17 +180,20 @@ public class VerificationCode_Fragment extends Fragment {
             toast.setGravity(Gravity.CENTER,0,0);
             toast.show();
         }
-    }
+    }*/
 
-    private void PharmaRef(String ph_name,String ph_phone,String ph_address,String ph_pass){
-
+    // upload pharmacy info into Database
+    private void PharmaRef(String ph_name,String ph_email,String ph_phone,String ph_address,String ph_pass){
+        String ph_distance = String.valueOf(RandNumbDistance(1,500));
         String devicetoken= FirebaseInstanceId.getInstance().getToken();
         pharmacy_data data = new pharmacy_data(
                 ph_name,
+                ph_email,
                 ph_phone,
                 ph_address,
                 ph_pass,
                 "",
+                ph_distance,
                 devicetoken
                 );
         pharma_ref.child("pharmacy_list").child(Phone_no).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -180,6 +208,16 @@ public class VerificationCode_Fragment extends Fragment {
         });
     }
 
+    public static int RandNumbDistance(int max,int min){
+
+        Random rn = new Random();
+        int n = max - min + 1;
+        int i = rn.nextInt() % n;
+        int randomNum =  min + i;
+
+        return randomNum;
+    }
+/*
     private void DeliveryRef(String del_name,String del_phone,String del_pass){
         String devicetoken= FirebaseInstanceId.getInstance().getToken();
         delivery_data data = new delivery_data(
@@ -209,7 +247,7 @@ public class VerificationCode_Fragment extends Fragment {
                 patient_pass,
                 devicetoken);
 
-        delivery_ref.child("patient_list").child(Phone_no).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+        patientRef.child("patient_list").child(Phone_no).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
@@ -220,5 +258,5 @@ public class VerificationCode_Fragment extends Fragment {
                 }
             }
         });
-    }
+    }*/
 }

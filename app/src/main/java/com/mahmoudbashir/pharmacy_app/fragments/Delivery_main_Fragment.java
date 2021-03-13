@@ -1,5 +1,7 @@
 package com.mahmoudbashir.pharmacy_app.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -26,13 +30,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mahmoudbashir.pharmacy_app.Int_erFace.delivery_accept_requestsInterface;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.adapters.Delivery_RequestAdapter;
 import com.mahmoudbashir.pharmacy_app.models.RequestData;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Delivery_main_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
@@ -45,6 +52,7 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
     List<RequestData> mlist = new ArrayList<>();
     RecyclerView rec_delivery_requests;
     Delivery_RequestAdapter adapter;
+    delivery_accept_requestsInterface accept_requestsInterface;
     public Delivery_main_Fragment() {
         // Required empty public constructor
     }
@@ -67,7 +75,39 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         auth = FirebaseAuth.getInstance();
         RequestRef = FirebaseDatabase.getInstance().getReference("Requests");
 
-        adapter = new Delivery_RequestAdapter(getContext(),mlist);
+        //set Adapter and set Recyclerview
+        adapter = new Delivery_RequestAdapter(getContext(), mlist, new delivery_accept_requestsInterface() {
+            @Override
+            public void updateRequestState(String reqId) {
+                //RequestRef = FirebaseDatabase.getInstance().getReference("Requests");
+                AlertDialog.Builder builder =new AlertDialog.Builder(getContext());
+                builder.setTitle("Configuration");
+                builder.setMessage("Confirm This Drug Request!");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Map upData = new HashMap();
+                        upData.put("status","shipment booked");
+                        upData.put("delivery_id", SharedPrefranceManager.getInastance(getContext()).getUser_Phone());
+                        RequestRef.child(reqId).updateChildren(upData).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()){
+                                    NavDirections act = Delivery_main_FragmentDirections.Companion.actionDeliveryMainFragmentToDeliveryShippedRequestsFragment();
+                                    Navigation.findNavController(v).navigate(act);
+                                }
+                            }
+                        });
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.setCancelable(true);
+                    }
+                }).show();
+            }
+        });
         rec_delivery_requests.setAdapter(adapter);
         getRequestsData();
 
@@ -101,11 +141,12 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         return true;
     }
 
+    // get all drug requests
     private void getRequestsData(){
-        mlist.clear();
         RequestRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot sn, @Nullable String previousChildName) {
+                mlist.clear();
                 String status = sn.child("status").getValue().toString();
                 if (status.equals("pending")){
                     RequestData requestData = sn.getValue(RequestData.class);
