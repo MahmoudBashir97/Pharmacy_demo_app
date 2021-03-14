@@ -13,6 +13,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mahmoudbashir.pharmacy_app.Int_erFace.delivery_accept_requestsInterface;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.adapters.Delivery_RequestAdapter;
@@ -48,7 +51,7 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
     DrawerLayout drawerLayout;
     View v;
     FirebaseAuth auth;
-    DatabaseReference RequestRef;
+    DatabaseReference RequestRef,sendTokenRef;
     List<RequestData> mlist = new ArrayList<>();
     RecyclerView rec_delivery_requests;
     Delivery_RequestAdapter adapter;
@@ -74,6 +77,9 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
 
         auth = FirebaseAuth.getInstance();
         RequestRef = FirebaseDatabase.getInstance().getReference("Requests");
+        sendTokenRef = FirebaseDatabase.getInstance().getReference("delivery");
+        SendToken();
+
 
         //set Adapter and set Recyclerview
         adapter = new Delivery_RequestAdapter(getContext(), mlist, new delivery_accept_requestsInterface() {
@@ -197,5 +203,22 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
 
             }
         });*/
+    }
+
+    private void SendToken(){
+        String ph_phone = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
+        String devicetoken= FirebaseInstanceId.getInstance().getToken();
+        HashMap<String,Object> TokenMap = new HashMap<>();
+        TokenMap.put("deviceToken",devicetoken);
+        sendTokenRef.child("delivery_list").child(ph_phone).updateChildren(TokenMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+                            Log.d("TokenStatus", "Sent");
+                        }
+                                    }
+                });
     }
 }

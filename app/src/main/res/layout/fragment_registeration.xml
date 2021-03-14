@@ -11,6 +11,10 @@
             name="isLogin"
             type="Boolean" />
 
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
         <import type="android.view.View"/>
     </data>
 
@@ -219,6 +223,14 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="70dp"/>
+
+        <ProgressBar
+            android:id="@+id/prog_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:visibility="@{isLoading?View.VISIBLE : View.GONE , default = gone}"
+            />
 
     </RelativeLayout>
 </layout>

@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.adapters.PatientPharmacyList_adapter;
 import com.mahmoudbashir.pharmacy_app.models.PharmacyListPatient_model;
@@ -36,6 +40,7 @@ import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -45,7 +50,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
     ImageView show_menu,show_notifications_btn;
     DrawerLayout drawerLayout;
 
-    DatabaseReference reference;
+    DatabaseReference reference,sendTokenRef;
     FirebaseAuth auth;
 
     PharmacyListPatient_model listPatient_model;
@@ -77,6 +82,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("pharmacy").child("pharmacy_list");
 
+        sendToken();
 
         show_menu.setOnClickListener(v1 -> {
             drawerLayout.open();
@@ -154,20 +160,20 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
         });
     }
 
-    private void reorderRecyclerView(){
-        int[] a=new int[modelList.size()];
-        if (modelList.size()>0){
-        for (int i=0;i<modelList.size();i++){
-            a[i] = modelList.get(i).getPh_distance();
-        }
-        Arrays.sort(a);
-        for (int x=0;x<a.length;x++){
-            if (a[x] == modelList.get(x).getPh_distance()){
-            modelList.add(x,modelList.get(x));
-            }else {
-                modelList.add(x+1,modelList.get(x+1));
-            }
-        }
-    }
+    private void sendToken(){
+        String ph_phone = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
+        sendTokenRef = FirebaseDatabase.getInstance().getReference("patient");
+        String devicetoken = FirebaseInstanceId.getInstance().getToken();
+        HashMap<String, Object> TokenMap = new HashMap<>();
+        TokenMap.put("deviceToken", devicetoken);
+        sendTokenRef.child("patient_list").child(ph_phone).updateChildren(TokenMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("TokenStatus:","sent");
+                        }
+                    }
+                });
     }
 }

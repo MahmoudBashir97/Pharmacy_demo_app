@@ -11,7 +11,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -74,6 +73,12 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
             );
             Navigation.findNavController(v).navigate(act);
         });
+        detailsBinding.toChatBtn.setOnClickListener(v -> {
+            NavDirections act = Patient_to_pharmacy_details_FragmentDirections.Companion.actionPatientToPharmacyDetailsFragmentToRequestChatPatientToPharmayFragment(
+                    ph_phone
+            );
+            Navigation.findNavController(v).navigate(act);
+        });
 
         return detailsBinding.getRoot();
     }
@@ -83,8 +88,7 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if (snapshot.exists()){
-                    if (snapshot.hasChildren()){
+                if (snapshot.exists() && snapshot.hasChildren()){
                         for (DataSnapshot d:snapshot.getChildren()){
                             String drug_description = d.child("drug_description").getValue().toString();
                             String drug_name= d.child("drug_name").getValue().toString();
@@ -104,7 +108,6 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
 
                         }
                     }
-                }
 
                 Products_adapter products_adapter = new Products_adapter(modelList,getContext(),"patient",ph_phone);
                 if (products_adapter.getItemCount()>0){
@@ -114,7 +117,7 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                error.getMessage();
             }
         });
     }
