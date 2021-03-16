@@ -44,6 +44,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/notification"
                 android:layout_marginRight="10dp"
+                android:visibility="gone"
                 />
         </LinearLayout>
     </RelativeLayout>

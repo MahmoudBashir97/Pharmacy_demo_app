@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +40,8 @@ import com.mahmoudbashir.pharmacy_app.adapters.Delivery_RequestAdapter;
 import com.mahmoudbashir.pharmacy_app.models.RequestData;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +50,7 @@ import java.util.Map;
 
 public class Delivery_main_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
 
+    TextView txt_no_requests;
     ImageView show_menu,show_notifications_btn;
     DrawerLayout drawerLayout;
     View v;
@@ -68,9 +72,12 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         v =  inflater.inflate(R.layout.delivery_drawer_layout, container, false);
         drawerLayout = v.findViewById(R.id.drawer_layout);
         show_menu = v.findViewById(R.id.show_menu);
+        txt_no_requests = v.findViewById(R.id.txt_no_requests);
         show_notifications_btn = v.findViewById(R.id.show_notifications_btn);
         rec_delivery_requests = v.findViewById(R.id.rec_delivery_requests);
         rec_delivery_requests.setHasFixedSize(true);
+
+        txt_no_requests.setVisibility(View.GONE);
 
         NavigationView navigationView = v.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -78,7 +85,15 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         auth = FirebaseAuth.getInstance();
         RequestRef = FirebaseDatabase.getInstance().getReference("Requests");
         sendTokenRef = FirebaseDatabase.getInstance().getReference("delivery");
-        SendToken();
+        String ph_phone = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
+
+       /* try {
+            Thread.sleep(200);
+            SendToken(ph_phone);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
 
 
         //set Adapter and set Recyclerview
@@ -116,6 +131,9 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         });
         rec_delivery_requests.setAdapter(adapter);
         getRequestsData();
+        if (mlist.size() == 0){
+            txt_no_requests.setVisibility(View.VISIBLE);
+        }
 
         //open menu drawer
         show_menu.setOnClickListener(v1 -> {
@@ -149,17 +167,19 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
 
     // get all drug requests
     private void getRequestsData(){
+        mlist.clear();
         RequestRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot sn, @Nullable String previousChildName) {
-                mlist.clear();
                 String status = sn.child("status").getValue().toString();
                 if (status.equals("pending")){
                     RequestData requestData = sn.getValue(RequestData.class);
                     mlist.add(requestData);
-                    adapter.notifyDataSetChanged();
-
                 }
+                if (mlist.size() >0){
+                    txt_no_requests.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -179,7 +199,7 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                txt_no_requests.setVisibility(View.VISIBLE);
             }
         });
         /*RequestRef.addValueEventListener(new ValueEventListener() {
@@ -205,20 +225,18 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         });*/
     }
 
-    private void SendToken(){
-        String ph_phone = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
+    private void SendToken(String ph_phone){
         String devicetoken= FirebaseInstanceId.getInstance().getToken();
-        HashMap<String,Object> TokenMap = new HashMap<>();
+        Map TokenMap = new HashMap<>();
         TokenMap.put("deviceToken",devicetoken);
-        sendTokenRef.child("delivery_list").child(ph_phone).updateChildren(TokenMap)
+       sendTokenRef.child("delivery_list").child(ph_phone).updateChildren(TokenMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-
                             Log.d("TokenStatus", "Sent");
                         }
-                                    }
+                    }
                 });
     }
 }

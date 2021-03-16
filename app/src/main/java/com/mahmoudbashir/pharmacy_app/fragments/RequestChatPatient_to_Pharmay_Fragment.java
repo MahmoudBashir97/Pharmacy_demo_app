@@ -54,10 +54,11 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
     DatabaseReference rootRef,messageRefReceiver;
     private final List<Messages> messagesList=new ArrayList<>();
     private MessageAdapter adapter;
-    private String userName,pharma_name;
+    private String myName,pharma_name,destination_name;
     Uri fileUri;
     UploadTask uploadTask;
     String imgUri="";
+
 
     public RequestChatPatient_to_Pharmay_Fragment() {
         // Required empty public constructor
@@ -70,7 +71,8 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
         requestChatBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_request_chat_patient_to_pharmay, container, false);
         messageSenderID = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
         messageRecieverID = RequestChatPatient_to_Pharmay_FragmentArgs.fromBundle(getArguments()).getUserPhone();
-        userName = SharedPrefranceManager.getInastance(getContext()).getUser_Name();
+        myName = SharedPrefranceManager.getInastance(getContext()).getUser_Name();
+        destination_name = RequestChatPatient_to_Pharmay_FragmentArgs.fromBundle(getArguments()).getUserName();
 
         rootRef = FirebaseDatabase.getInstance().getReference("Messages");
         messageRefReceiver = FirebaseDatabase.getInstance().getReference("Messages");
@@ -96,7 +98,7 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
 
         RetrievePharmacyData();
         RetreiverMessages();
-        adapter = new MessageAdapter(getContext(),messagesList,messageSenderID,userName,pharma_name);
+        adapter = new MessageAdapter(getContext(),messagesList,messageSenderID,myName,destination_name);
         requestChatBinding.recRequestChat.setAdapter(adapter);
         requestChatBinding.btnSend.setOnClickListener(v -> {
             sendMessage();
@@ -190,7 +192,10 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
                                             new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()){
                                                     Log.e("Send message", "Message Sent Successfully...");
+                                                        adapter.notifyDataSetChanged();
+                                                    }
                                                 }
                                             }
                                     );
@@ -270,7 +275,10 @@ public class RequestChatPatient_to_Pharmay_Fragment extends Fragment {
                                 new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
                                         Log.e("Send message", "Message Sent Successfully...");
+                                        adapter.notifyDataSetChanged();
+                                    }
                                     }
                                 }
                         );

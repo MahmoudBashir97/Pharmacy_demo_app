@@ -54,6 +54,13 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/pharmacyMainScreen_Fragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_pharmacyMainScreen_Fragment_to_pharmacyChat_Fragment"
+            app:destination="@id/pharmacyChat_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/screen_SplashFragment"
@@ -86,7 +93,15 @@
         android:id="@+id/pharmacyNotificationList_Fragment"
         android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyNotificationList_Fragment"
         android:label="fragment_pharmacy_notification_list"
-        tools:layout="@layout/fragment_pharmacy_notification_list_" />
+        tools:layout="@layout/fragment_pharmacy_notification_list_" >
+        <action
+            android:id="@+id/action_pharmacyNotificationList_Fragment_to_pharmacyRequests_Fragment"
+            app:destination="@id/pharmacyRequests_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/pharmacyRequests_Fragment"
         android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyRequests_Fragment"
@@ -425,6 +440,10 @@
         android:name="UserPhone"
         app:argType="string"
         app:nullable="false"/>
+        <argument
+            android:name="UserName"
+            app:argType="string"
+            app:nullable="false"/>
         <action
             android:id="@+id/action_requestChatPatient_to_Pharmay_Fragment_to_view_Img_Fragment"
             app:destination="@id/view_Img_Fragment" />
@@ -475,4 +494,9 @@
             app:argType="string"
             app:nullable="false"/>
     </fragment>
+    <fragment
+        android:id="@+id/pharmacyChat_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.PharmacyChat_Fragment"
+        android:label="fragment_pharmacy_chat"
+        tools:layout="@layout/fragment_pharmacy_chat" />
 </navigation>

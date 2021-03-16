@@ -54,10 +54,10 @@ public class PharmacyRequests_Fragment extends Fragment {
         reqRef = FirebaseDatabase.getInstance().getReference("Requests");
 
         pharmacyRequestsBinding.recRequests.setHasFixedSize(true);
-        getRequests();
+
         adapter = new pharmacy_requests_adapter(getContext(),mlist);
         pharmacyRequestsBinding.recRequests.setAdapter(adapter);
-
+        getRequests();
 
 
         return pharmacyRequestsBinding.getRoot();
@@ -68,17 +68,18 @@ public class PharmacyRequests_Fragment extends Fragment {
         reqRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
-
                             String ph_phone = snapshot.child("ph_phone").getValue().toString();
-                            if (ph_phone.equals(myPhonNo)){
+                            String status = snapshot.child("status").getValue().toString();
+                            if (ph_phone.equals(myPhonNo)&& !status.equals("refuse")){
                                 RequestData data = snapshot.getValue(RequestData.class);
-                                adapter.notifyDataSetChanged();
                                 mlist.add(data);
                         }
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

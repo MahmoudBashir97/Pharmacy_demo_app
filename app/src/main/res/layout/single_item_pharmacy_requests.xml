@@ -7,74 +7,114 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@drawable/back_edt_add_drug"
-        >
-        <ImageView
-            android:id="@+id/drug_img"
-            android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/ic_panadol"
-            android:scaleType="fitXY"/>
-        <RelativeLayout
+            android:orientation="horizontal"
+            android:background="@drawable/back_edt_add_drug"
+            >
+            <ImageView
+                android:id="@+id/drug_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_panadol"
+                android:scaleType="fitXY"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/txt_drug_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Drug name"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:layout_marginTop="10dp"
+                        />
+                    <TextView
+                        android:id="@+id/txt_ph_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pharmacy Name"
+                        android:textSize="14sp"
+                        android:textColor="#777777"
+                        android:layout_marginTop="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/txt_drug_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14 "
+                        android:textSize="14sp"
+                        android:textColor="@color/main_color"
+                        android:layout_marginTop="5dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_patient_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sunday, 07/02/2021"
+                    android:textColor="#777777"
+                    android:textSize="14sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/accept_lin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/txt_drug_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Drug name"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
-                    android:id="@+id/txt_ph_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pharmacy Name"
-                    android:textSize="14sp"
-                    android:textColor="#777777"
-                    android:layout_marginTop="5dp"
-                    />
-                <TextView
-                    android:id="@+id/txt_drug_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="14 "
-                    android:textSize="14sp"
-                    android:textColor="@color/main_color"
-                    android:layout_marginTop="5dp"
-                    />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/txt_patient_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="User Name"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:layout_alignParentEnd="true"
-                />
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:background="@drawable/back_edt_add_drug"
+            android:padding="8dp"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/refuse_btn"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="refuse"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="#777777"
+                android:textAllCaps="false"/>
+            <Button
+                android:id="@+id/accept_btn"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="accept"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@drawable/add_btn_back"
+                android:layout_marginLeft="20dp"
+                android:textAllCaps="false"/>
 
-            <TextView
-                android:id="@+id/txt_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sunday, 07/02/2021"
-                android:textColor="#777777"
-                android:textSize="14sp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                />
 
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

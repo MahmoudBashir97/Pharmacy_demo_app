@@ -69,13 +69,15 @@ public class Patient_to_pharmacy_details_Fragment extends Fragment {
 
         detailsBinding.openChatRequests.setOnClickListener(v -> {
             NavDirections act = Patient_to_pharmacy_details_FragmentDirections.Companion.actionPatientToPharmacyDetailsFragmentToRequestChatPatientToPharmayFragment(
-                   ph_phone
+                   ph_phone,
+                    ph_name
             );
             Navigation.findNavController(v).navigate(act);
         });
         detailsBinding.toChatBtn.setOnClickListener(v -> {
             NavDirections act = Patient_to_pharmacy_details_FragmentDirections.Companion.actionPatientToPharmacyDetailsFragmentToRequestChatPatientToPharmayFragment(
-                    ph_phone
+                    ph_phone,
+                    ph_name
             );
             Navigation.findNavController(v).navigate(act);
         });

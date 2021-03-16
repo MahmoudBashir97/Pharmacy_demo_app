@@ -95,13 +95,13 @@ public class Pharmacy_DrugScreen_Fragment extends Fragment {
         }else {
             drugScreenBinding.setIsPharma(false);
 
-            drugScreenBinding.toChatBtn.setOnClickListener(v -> {
+           /* drugScreenBinding.toChatBtn.setOnClickListener(v -> {
 
                 NavDirections act = Pharmacy_DrugScreen_FragmentDirections.Companion.actionPharmacyDrugScreenFragmentToRequestChatPatientToPharmayFragment2(
                         ph_phone
                 );
                 Navigation.findNavController(v).navigate(act);
-            });
+            });*/
 
             drugScreenBinding.buyNowBtn.setOnClickListener(v -> {
                         AlertDialog.Builder builder =new AlertDialog.Builder(getContext());

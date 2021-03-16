@@ -105,6 +105,8 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
             );
             Navigation.findNavController(v1).navigate(act);
         });
+
+        // this to open chats
         open_requests.setOnClickListener(v1 -> {
             NavDirections act = PharmacyMainScreen_FragmentDirections.Companion.actionPharmacyMainScreenFragmentToPharmacyRequestsFragment2();
             Navigation.findNavController(v1).navigate(act);
@@ -193,7 +195,7 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                error.getMessage();
             }
         });
 
@@ -203,7 +205,6 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
 
         sendTokenRef = FirebaseDatabase.getInstance().getReference("pharmacy");
         String devicetoken = FirebaseInstanceId.getInstance().getToken();
-        Toast.makeText(getContext(), "Token :  "+devicetoken, Toast.LENGTH_SHORT).show();
         HashMap<String,Object> TokenMap = new HashMap<>();
         TokenMap.put("deviceToken",devicetoken);
         sendTokenRef.child("pharmacy_list").child(ph_phone).updateChildren(TokenMap)

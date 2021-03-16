@@ -42,6 +42,7 @@
                 android:layout_height="20dp"
                 android:src="@drawable/notification"
                 android:layout_marginRight="10dp"
+                android:visibility="gone"
                 />
         </LinearLayout>
     </RelativeLayout>
@@ -55,4 +56,14 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/single_item_pharmacy_notification"
         />
+    <TextView
+        android:id="@+id/txt_no_requests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="There is no new Requests"
+        android:textColor="#B2B2B2"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

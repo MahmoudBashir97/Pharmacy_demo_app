@@ -142,6 +142,7 @@ public class AddNewDrug_Fragment extends Fragment {
 
     // upload drug data to database
     private void UploadDrugData(String drug_name,String drug_price,String drug_tablets,String drug_desc){
+        newDrugBinding.setIsUploading(true);
         fileStorageReference =myStorageRef.child(
                 System.currentTimeMillis()+
                         ","+getFileExtension(imageuri)
@@ -175,6 +176,7 @@ public class AddNewDrug_Fragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
+                                newDrugBinding.setIsUploading(false);
                                 Navigation.findNavController(newDrugBinding.getRoot()).navigateUp();
                                 Toast.makeText(getContext(), "Your New Drug Added Successfully!", Toast.LENGTH_SHORT).show();
                             }
@@ -185,6 +187,7 @@ public class AddNewDrug_Fragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                newDrugBinding.setIsUploading(false);
                 Toast.makeText(getContext(), "Failed!!", Toast.LENGTH_SHORT).show();
             }
         });

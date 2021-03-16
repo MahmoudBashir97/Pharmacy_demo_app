@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,9 +87,11 @@ public class Delivery_shipped_requests_Fragment extends Fragment implements Upda
 
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
-                        String status = snapshot.child("status").getValue().toString();
+
                         String delivery_id = snapshot.child("delivery_id").getValue().toString();
+                        String status = snapshot.child("status").getValue().toString();
                         String local_deliveryId = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
+                        Log.d("del_id: ",""+local_deliveryId);
                         if (delivery_id.equals(local_deliveryId)){
                           if (status.equals("shipment booked")){
                              RequestData data = snapshot.getValue(RequestData.class);

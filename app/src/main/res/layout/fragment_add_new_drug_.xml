@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="isUploading"
+            type="Boolean" />
         <import type="android.view.View"/>
     </data>
 
@@ -12,6 +15,15 @@
         tools:context=".fragments.AddNewDrug_Fragment"
         android:background="#FFFFFF">
 
+        <ProgressBar
+            android:id="@+id/prog_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="@{isUploading? View.VISIBLE : View.GONE,default=gone}"
+            />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -19,6 +31,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
 
                 <RelativeLayout
                     android:id="@+id/rel_bar"
