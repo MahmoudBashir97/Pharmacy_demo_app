@@ -71,9 +71,13 @@ public class Delivery_shipped_requests_Fragment extends Fragment implements Upda
                 adapter.notifyDataSetChanged();
             }
         });
+        deliveryShippedRequestsBinding.setIsLoading(true);
         deliveryShippedRequestsBinding.recShippedReq.setHasFixedSize(true);
         deliveryShippedRequestsBinding.recShippedReq.setAdapter(adapter);
         getShippedRequests();
+        if (mlist.size()>0){
+            deliveryShippedRequestsBinding.setIsLoading(false);
+        }
 
 
 
@@ -81,13 +85,13 @@ public class Delivery_shipped_requests_Fragment extends Fragment implements Upda
     }
 
     private void getShippedRequests(){
+
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
-
                         String delivery_id = snapshot.child("delivery_id").getValue().toString();
                         String status = snapshot.child("status").getValue().toString();
                         String local_deliveryId = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
@@ -97,6 +101,7 @@ public class Delivery_shipped_requests_Fragment extends Fragment implements Upda
                              RequestData data = snapshot.getValue(RequestData.class);
                              mlist.add(data);
                              adapter.notifyDataSetChanged();
+                              deliveryShippedRequestsBinding.setIsLoading(false);
                            }
                         }
                     }

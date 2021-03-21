@@ -53,7 +53,8 @@
             app:popExitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
             app:popUpTo="@+id/pharmacyMainScreen_Fragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            />
         <action
             android:id="@+id/action_pharmacyMainScreen_Fragment_to_pharmacyChat_Fragment"
             app:destination="@id/pharmacyChat_Fragment"
@@ -191,6 +192,7 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
+            app:popUpTo="@+id/delivery_main_Fragment"
             app:popUpToInclusive="true"
             />
     </fragment>
@@ -357,7 +359,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/verificationCode_Fragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
     <fragment
@@ -496,7 +501,11 @@
     </fragment>
     <fragment
         android:id="@+id/pharmacyChat_Fragment"
-        android:name="com.mahmoudbashir.pharmacy_app.PharmacyChat_Fragment"
+        android:name="com.mahmoudbashir.pharmacy_app.fragments.PharmacyChat_Fragment"
         android:label="fragment_pharmacy_chat"
-        tools:layout="@layout/fragment_pharmacy_chat" />
+        tools:layout="@layout/fragment_pharmacy_chat" >
+        <action
+            android:id="@+id/action_pharmacyChat_Fragment_to_requestChatPatient_to_Pharmay_Fragment"
+            app:destination="@id/requestChatPatient_to_Pharmay_Fragment" />
+    </fragment>
 </navigation>

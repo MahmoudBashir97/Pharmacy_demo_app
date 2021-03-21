@@ -32,15 +32,18 @@ import com.mahmoudbashir.pharmacy_app.R;
 import com.mahmoudbashir.pharmacy_app.databinding.FragmentRegisterationBinding;
 import com.mahmoudbashir.pharmacy_app.models.delivery_data;
 import com.mahmoudbashir.pharmacy_app.models.patient_data;
+import com.mahmoudbashir.pharmacy_app.models.pharmacy_data;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Registeration_Fragment extends Fragment {
 
     FragmentRegisterationBinding registerationBinding;
-    DatabaseReference pharmaRef, deliveryRef, patientRef, sendTokenRef;
+    DatabaseReference pharma_ref, deliveryRef, patientRef, sendTokenRef;
+
     FirebaseAuth auth;
 
     public Registeration_Fragment() {
@@ -54,7 +57,7 @@ public class Registeration_Fragment extends Fragment {
         registerationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_registeration, container, false);
         FirebaseApp.initializeApp(getContext());
         auth = FirebaseAuth.getInstance();
-        pharmaRef = FirebaseDatabase.getInstance().getReference("pharmacy");
+        pharma_ref= FirebaseDatabase.getInstance().getReference("pharmacy");
         deliveryRef = FirebaseDatabase.getInstance().getReference("delivery");
         patientRef = FirebaseDatabase.getInstance().getReference("patient");
 
@@ -104,17 +107,29 @@ public class Registeration_Fragment extends Fragment {
                     registerationBinding.edtRegistPass.setError("Please Enter Pharmacy Password!");
                     registerationBinding.edtRegistPass.requestFocus();
                 } else {
-                    //Toast.makeText(getContext(), "registered", Toast.LENGTH_SHORT).show();
                     //do navigate here ...!
-                    NavDirections act = Registeration_FragmentDirections.Companion.actionRegisterationFragmentToVerificationCodeFragment(
-                            "pharma",
-                            registerationBinding.edtRegistName.getText().toString(),
-                            registerationBinding.edtRegistEmail.getText().toString(),
-                            registerationBinding.edtRegistPharmaAddress.getText().toString(),
-                            registerationBinding.edtRegistPhone.getText().toString(),
-                            registerationBinding.edtRegistPass.getText().toString()
-                    );
-                    Navigation.findNavController(v).navigate(act);
+                    String ph_phone = "+2" + registerationBinding.edtRegistPhone.getText().toString();
+                    String email = registerationBinding.edtRegistEmail.getText().toString();
+                    String pass = registerationBinding.edtRegistPass.getText().toString();
+
+                    auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                                                               @Override
+                                                                                               public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                                                   if (task.isSuccessful()) {
+                                                                                                       PharmaRef(v,registerationBinding.edtRegistName.getText().toString(),
+                                                                                                               registerationBinding.edtRegistEmail.getText().toString(),
+                                                                                                               registerationBinding.edtRegistPhone.getText().toString(),
+                                                                                                               registerationBinding.edtRegistPharmaAddress.getText().toString(),
+                                                                                                               registerationBinding.edtRegistPass.getText().toString());
+                                                                                                   }
+                                                                                               }
+                                                                                           }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            registerationBinding.setIsLoading(false);
+                            Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
             } else if (st_regist_type.equals("delivery")) {
@@ -146,6 +161,12 @@ public class Registeration_Fragment extends Fragment {
                                 DeliveryRef(v, registerationBinding.edtRegistName.getText().toString(), email, ph_phone, pass);
                             }
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            registerationBinding.setIsLoading(false);
+                            Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     });
                 }
             } else if (st_regist_type.equals("patient")) {
@@ -176,6 +197,12 @@ public class Registeration_Fragment extends Fragment {
                             if (task.isSuccessful()) {
                                 PatientRef(v, registerationBinding.edtRegistName.getText().toString(), email, ph_phone, pass);
                             }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            registerationBinding.setIsLoading(false);
+                            Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -240,7 +267,7 @@ public class Registeration_Fragment extends Fragment {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            pharmaRef.child("pharmacy_list").addListenerForSingleValueEvent(new ValueEventListener() {
+                            pharma_ref.child("pharmacy_list").addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                                 @Override
                                                                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                                                                     if (snapshot.exists() && snapshot.hasChildren()) {
@@ -310,7 +337,6 @@ public class Registeration_Fragment extends Fragment {
                                 }
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError e) {
                             e.getMessage();
@@ -321,6 +347,7 @@ public class Registeration_Fragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                registerationBinding.setIsLoading(false);
                 e.getMessage();
                 registerationBinding.edtEmail.setError("Invalid Email Address!!!");
                 registerationBinding.edtPass.setError("Please Enter Correct Password!!!");
@@ -334,38 +361,38 @@ public class Registeration_Fragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            patientRef.child("patient_list").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        if (snapshot.hasChildren()) {
+                                            registerationBinding.setIsLoading(false);
+                                            for (DataSnapshot sn : snapshot.getChildren()) {
+                                                if (patient_email.equals(sn.child("patient_email").getValue().toString())) {
+                                                    String ph_phone = sn.child("patient_phone").getValue().toString();
+                                                    String ph_pass = sn.child("patient_pass").getValue().toString();
+                                                    String name = sn.child("patient_name").getValue().toString();
+                                                    String Email = sn.child("patient_email").getValue().toString();
 
-                        patientRef.child("patient_list").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    if (snapshot.hasChildren()) {
-                                        registerationBinding.setIsLoading(false);
-                                        for (DataSnapshot sn : snapshot.getChildren()) {
-                                            if (patient_email.equals(sn.child("patient_email").getValue().toString())) {
-                                                String ph_phone = sn.child("patient_phone").getValue().toString();
-                                                String ph_pass = sn.child("patient_pass").getValue().toString();
-                                                String name = sn.child("patient_name").getValue().toString();
-                                                String Email = sn.child("patient_email").getValue().toString();
+                                                    NavDirections act = Registeration_FragmentDirections.Companion.actionRegisterationFragmentToPatientPathFragment();
+                                                    Navigation.findNavController(v).navigate(act);
 
-                                                NavDirections act = Registeration_FragmentDirections.Companion.actionRegisterationFragmentToPatientPathFragment();
-                                                Navigation.findNavController(v).navigate(act);
+                                                    SharedPrefranceManager.getInastance(getContext()).saveUser("patient", name, ph_phone, "");
 
-                                                SharedPrefranceManager.getInastance(getContext()).saveUser("patient", name, ph_phone, "");
+                                                }
 
                                             }
-
                                         }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                error.getMessage();
-                            }
-                        });
-
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    error.getMessage();
+                                }
+                            });
+                    }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -377,6 +404,51 @@ public class Registeration_Fragment extends Fragment {
 
             }
         });
+    }
+
+    // upload pharmacy info into Database
+    private void PharmaRef(View v ,String ph_name,String ph_email,String ph_phone,String ph_address,String ph_pass){
+        registerationBinding.setIsLoading(true);
+        String ph_distance = String.valueOf(RandNumbDistance(1,500));
+        String devicetoken= FirebaseInstanceId.getInstance().getToken();
+        pharmacy_data data = new pharmacy_data(
+                ph_name,
+                ph_email,
+                ph_phone,
+                ph_address,
+                ph_pass,
+                "",
+                ph_distance,
+                devicetoken
+        );
+        pharma_ref.child("pharmacy_list").child(ph_phone).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    registerationBinding.setIsLoading(false);
+                    SharedPrefranceManager.getInastance(getContext()).saveUser("pharma",ph_name,ph_phone,ph_address);
+                    NavDirections act = Registeration_FragmentDirections.Companion.actionRegisterationFragmentToVerificationCodeFragment(
+                            "pharma",
+                            registerationBinding.edtRegistName.getText().toString(),
+                            registerationBinding.edtRegistEmail.getText().toString(),
+                            registerationBinding.edtRegistPharmaAddress.getText().toString(),
+                            registerationBinding.edtRegistPhone.getText().toString(),
+                            registerationBinding.edtRegistPass.getText().toString()
+                    );
+                    Navigation.findNavController(v).navigate(act);
+                }
+            }
+        });
+    }
+
+    public static int RandNumbDistance(int max,int min){
+
+        Random rn = new Random();
+        int n = max - min + 1;
+        int i = rn.nextInt() % n;
+        int randomNum =  min + i;
+
+        return randomNum;
     }
 
     private void DeliveryRef(View v, String del_name, String del_email, String del_phone, String del_pass) {

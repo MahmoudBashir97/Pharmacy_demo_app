@@ -73,12 +73,14 @@ import androidx.recyclerview.widget.RecyclerView;
                             holder.img_booked.setImageResource(R.drawable.ic_right);
                             holder.img_transit.setImageResource(R.drawable.ic_right);
                             holder.booked_prog.setProgress(100,true);
+                            holder.change_status_btn.setText("In Transit");
                         }else if (status.equals("shipment delivered")){
                             holder.img_booked.setImageResource(R.drawable.ic_right);
                             holder.img_transit.setImageResource(R.drawable.ic_right);
                             holder.img_delivered.setImageResource(R.drawable.ic_right);
                             holder.booked_prog.setProgress(100,true);
                             holder.delivered_prog.setProgress(100,true);
+                            holder.change_status_btn.setText("Shipment Delivered");
                         }
                     }
                 }
@@ -86,29 +88,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         if (path.equals("patient")){
             holder.change_status_btn.setVisibility(View.GONE);
-        }else if (path.equals("delivery")){
-            if (status.equals("shipment booked")){
+        }else if (path.equals("delivery") && status.equals("shipment booked")){
                 holder.change_status_btn.setText(status);
-            }
         }
-
        holder.change_status_btn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                changeRequestStateInterface.setChangeState(holder.change_status_btn,position,mlist.get(position).getRequestId());
            }
        });
-
         holder.txt_drug_name.setText(mlist.get(position).getDrug_name());
         holder.txt_drug_price.setText(mlist.get(position).getDrug_price());
         holder.txt_drug_tablets.setText(mlist.get(position).getDrug_tablets()+" tablets");
-
     }
 
     @Override
@@ -133,10 +130,6 @@ import androidx.recyclerview.widget.RecyclerView;
             delivered_prog = itemView.findViewById(R.id.delivered_prog);
             booked_prog = itemView.findViewById(R.id.booked_prog);
         }
-    }
-
-    private void getReqStatus(int position){
-
     }
     private void changeReqStatus(String st,int position){
         reqStatusRef = FirebaseDatabase.getInstance().getReference("Requests");

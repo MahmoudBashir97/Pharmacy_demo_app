@@ -141,7 +141,7 @@ public class pharmacy_requests_adapter extends RecyclerView.Adapter<pharmacy_req
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                e.getMessage();
+                Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

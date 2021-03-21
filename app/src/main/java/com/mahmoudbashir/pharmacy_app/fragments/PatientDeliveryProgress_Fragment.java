@@ -60,6 +60,9 @@ public class PatientDeliveryProgress_Fragment extends Fragment implements Update
         });
         deliveryProgressBinding.recShippedReq.setAdapter(adapter);
         getRequestsData();
+        if (mlist.size()>0){
+            deliveryProgressBinding.setIsLoading(false);
+        }
 
         deliveryProgressBinding.backBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigateUp();
@@ -68,7 +71,7 @@ public class PatientDeliveryProgress_Fragment extends Fragment implements Update
     }
 
     private void getRequestsData(){
-
+        deliveryProgressBinding.setIsLoading(true);
         String myId = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
         dataReq.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,6 +84,7 @@ public class PatientDeliveryProgress_Fragment extends Fragment implements Update
                             if (myId.equals(patientId)){
                                 RequestData data = sn.getValue(RequestData.class);
                                 mlist.add(data);
+                                deliveryProgressBinding.setIsLoading(false);
                             }
                         }
                         adapter.notifyDataSetChanged();

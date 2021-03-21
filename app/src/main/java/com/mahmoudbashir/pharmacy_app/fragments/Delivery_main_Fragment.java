@@ -146,10 +146,10 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.to_request:
+           /* case R.id.to_request:
                 NavDirections act1 = Delivery_main_FragmentDirections.Companion.actionDeliveryMainFragmentToDeliveryRequestsFragment();
                 Navigation.findNavController(v).navigate(act1);
-                break;
+                break;*/
             case R.id.to_delivery:
                 NavDirections act2 =  Delivery_main_FragmentDirections.Companion.actionDeliveryMainFragmentToDeliveryShippedRequestsFragment();
                 Navigation.findNavController(v).navigate(act2);

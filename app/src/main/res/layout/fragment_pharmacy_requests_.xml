@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="isLoading"
+            type="Boolean" />
         <import type="android.view.View"/>
     </data>
 
@@ -36,6 +39,16 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="There is no new requests."
+            android:textStyle="normal"
+            android:textSize="18sp"
+            android:textColor="#777777"
+            android:visibility="@{isLoading? View.VISIBLE:View.GONE,default = visible}"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_Requests"
             android:layout_width="match_parent"
@@ -44,6 +57,7 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/single_item_pharmacy_requests" />
+            tools:listitem="@layout/single_item_pharmacy_requests"
+            android:visibility="@{isLoading? View.GONE:View.VISIBLE,default = gone}"/>
     </RelativeLayout>
 </layout>

@@ -82,7 +82,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("pharmacy").child("pharmacy_list");
 
-        sendToken();
+       // sendToken();
 
         show_menu.setOnClickListener(v1 -> {
             drawerLayout.open();

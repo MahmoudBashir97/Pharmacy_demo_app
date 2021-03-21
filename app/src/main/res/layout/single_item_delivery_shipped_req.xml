@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:max="100"
                 android:progress="45"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="65dp"
                 android:layout_marginTop="38dp"/>
             <LinearLayout
                 android:id="@+id/f_lin"
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:max="100"
                 android:progress="0"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="33dp"
                 android:layout_marginTop="38dp"
                 android:layout_toRightOf="@+id/booked_prog"/>
 
@@ -187,7 +187,7 @@
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/s_lin"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="63dp"
                 >
 
                 <ImageView

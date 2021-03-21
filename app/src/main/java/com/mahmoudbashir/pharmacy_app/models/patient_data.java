@@ -7,7 +7,7 @@ public class patient_data {
     String patient_phone;
     String patient_pass;
     String deviceToken;
-
+    public patient_data(){}
     public patient_data(final String patient_name, final String patient_email, final String patient_phone, final String patient_pass,final String deviceToken) {
         this.patient_name = patient_name;
         this.patient_email = patient_email;

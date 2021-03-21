@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="isLoading"
+            type="Boolean" />
         <import type="android.view.View"/>
     </data>
 
@@ -36,6 +39,15 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="There is no new requests for delivery"
+            android:textSize="18sp"
+            android:textColor="#777777"
+            android:visibility="@{isLoading? View.VISIBLE:View.GONE,default = visible}"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_shipped_req"
             android:layout_width="match_parent"
@@ -43,6 +55,7 @@
             android:layout_below="@+id/rel_bar"
             android:layout_marginTop="15dp"
             tools:listitem="@layout/single_item_delivery_shipped_req"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="@{isLoading? View.GONE:View.VISIBLE,default = gone}"/>
     </RelativeLayout>
 </layout>

@@ -82,7 +82,7 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
         // get stored UserPhone
         ph_phone = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
        //upload device token to database server
-        SendToken();
+       // SendToken();
         // retreive pharmacy info
         getPharmacyInfo();
 
@@ -106,9 +106,9 @@ public class PharmacyMainScreen_Fragment extends Fragment implements NavigationV
             Navigation.findNavController(v1).navigate(act);
         });
 
-        // this to open chats
+        // this to open chats list
         open_requests.setOnClickListener(v1 -> {
-            NavDirections act = PharmacyMainScreen_FragmentDirections.Companion.actionPharmacyMainScreenFragmentToPharmacyRequestsFragment2();
+            NavDirections act = PharmacyMainScreen_FragmentDirections.Companion.actionPharmacyMainScreenFragmentToPharmacyChatFragment();
             Navigation.findNavController(v1).navigate(act);
         });
         return v;

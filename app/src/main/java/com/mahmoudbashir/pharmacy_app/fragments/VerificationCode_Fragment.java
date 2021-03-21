@@ -77,16 +77,11 @@ public class VerificationCode_Fragment extends Fragment {
             }
 
             if (code == vfCode){
+                codeBinding.setIsLoading(true);
                 if (regist_type.equals("pharma")){
-                    mAuth.createUserWithEmailAndPassword(email,pass)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()){
-                                        PharmaRef(name,email,Phone_no,address,pass);
-                                    }
-                                }
-                            });
+                    codeBinding.setIsLoading(false);
+                    NavDirections act = VerificationCode_FragmentDirections.Companion.actionVerificationCodeFragmentToPharmacyMainScreenFragment();
+                    Navigation.findNavController(getView()).navigate(act);
                 }
             }
         });

@@ -55,16 +55,19 @@ public class PharmacyRequests_Fragment extends Fragment {
 
         pharmacyRequestsBinding.recRequests.setHasFixedSize(true);
 
+        if (mlist.size()>0){
+            pharmacyRequestsBinding.setIsLoading(false);
+        }
         adapter = new pharmacy_requests_adapter(getContext(),mlist);
         pharmacyRequestsBinding.recRequests.setAdapter(adapter);
         getRequests();
-
 
         return pharmacyRequestsBinding.getRoot();
     }
 
     private void getRequests(){
         mlist.clear();
+        pharmacyRequestsBinding.setIsLoading(true);
         reqRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -73,9 +76,10 @@ public class PharmacyRequests_Fragment extends Fragment {
                     if (snapshot.hasChildren()){
                             String ph_phone = snapshot.child("ph_phone").getValue().toString();
                             String status = snapshot.child("status").getValue().toString();
-                            if (ph_phone.equals(myPhonNo)&& !status.equals("refuse")){
+                            if (ph_phone.equals(myPhonNo)&& status.equals("toPharma")){
                                 RequestData data = snapshot.getValue(RequestData.class);
                                 mlist.add(data);
+                                pharmacyRequestsBinding.setIsLoading(false);
                         }
                     }
                 }
@@ -99,7 +103,7 @@ public class PharmacyRequests_Fragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getContext(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

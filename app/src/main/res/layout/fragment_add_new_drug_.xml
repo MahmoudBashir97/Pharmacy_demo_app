@@ -153,7 +153,8 @@
                                 android:hint="13.5"
                                 android:textColorHint="#000000"
                                 android:padding="8dp"
-                                android:layout_weight="9" />
+                                android:layout_weight="9"
+                                android:inputType="number"/>
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
@@ -204,7 +205,8 @@
                                 android:hint="24"
                                 android:textColorHint="#000000"
                                 android:padding="8dp"
-                                android:layout_weight="9" />
+                                android:layout_weight="9"
+                                android:inputType="number"/>
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
