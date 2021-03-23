@@ -97,7 +97,7 @@ public class Delivery_shipped_requests_Fragment extends Fragment implements Upda
                         String local_deliveryId = SharedPrefranceManager.getInastance(getContext()).getUser_Phone();
                         Log.d("del_id: ",""+local_deliveryId);
                         if (delivery_id.equals(local_deliveryId)){
-                          if (status.equals("shipment booked")){
+                          if (status.equals("shipment booked") || status.equals("in transit")){
                              RequestData data = snapshot.getValue(RequestData.class);
                              mlist.add(data);
                              adapter.notifyDataSetChanged();

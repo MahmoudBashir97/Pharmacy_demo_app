@@ -45,15 +45,20 @@
             android:textSize="18sp"
             android:layout_centerInParent="true"
             android:visibility="@{isLoading?View.VISIBLE:View.GONE,default = visible}"/>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rel_bar"
+            android:layout_marginTop="15dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_shipped_req"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rel_bar"
-            android:layout_marginTop="15dp"
             tools:listitem="@layout/single_item_delivery_shipped_req"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:visibility="@{isLoading?View.GONE:View.VISIBLE,default = gone}"
             />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 </layout>

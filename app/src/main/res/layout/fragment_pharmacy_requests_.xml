@@ -49,15 +49,20 @@
             android:textColor="#777777"
             android:visibility="@{isLoading? View.VISIBLE:View.GONE,default = visible}"/>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rel_bar"
+            android:layout_marginTop="10dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_Requests"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rel_bar"
-            android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/single_item_pharmacy_requests"
             android:visibility="@{isLoading? View.GONE:View.VISIBLE,default = gone}"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 </layout>

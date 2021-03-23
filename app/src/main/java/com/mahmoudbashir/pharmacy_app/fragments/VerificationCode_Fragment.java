@@ -1,6 +1,5 @@
 package com.mahmoudbashir.pharmacy_app.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,10 +34,10 @@ public class VerificationCode_Fragment extends Fragment {
     String regist_type,name,email,address,phone,pass;
     String Phone_no;
 
-    DatabaseReference pharma_ref,delivery_ref,patient_ref;
+    DatabaseReference pharma_ref,delivery_ref,patient_ref,checkref;
     FirebaseDatabase database;
     FirebaseAuth mAuth;
-
+    String status="failed";
     private int vfCode = 222333;
     public VerificationCode_Fragment() {
         // Required empty public constructor
@@ -59,6 +57,7 @@ public class VerificationCode_Fragment extends Fragment {
 
         Phone_no = "+2"+phone;
 
+
         FirebaseApp.initializeApp(getContext());
         mAuth = FirebaseAuth.getInstance();
 
@@ -66,6 +65,8 @@ public class VerificationCode_Fragment extends Fragment {
         pharma_ref = FirebaseDatabase.getInstance().getReference("pharmacy");
         delivery_ref = FirebaseDatabase.getInstance().getReference("delivery");
         patient_ref = FirebaseDatabase.getInstance().getReference("patient");
+        checkref= FirebaseDatabase.getInstance().getReference();
+
 
         codeBinding.verifyBtn.setOnClickListener(v -> {
             String st_code  = codeBinding.edtVerifyCode.getText().toString();
@@ -78,10 +79,11 @@ public class VerificationCode_Fragment extends Fragment {
 
             if (code == vfCode){
                 codeBinding.setIsLoading(true);
-                if (regist_type.equals("pharma")){
-                    codeBinding.setIsLoading(false);
+                if (regist_type.equals("pharma") ){
+                   codeBinding.setIsLoading(false);
                     NavDirections act = VerificationCode_FragmentDirections.Companion.actionVerificationCodeFragmentToPharmacyMainScreenFragment();
                     Navigation.findNavController(getView()).navigate(act);
+
                 }
             }
         });
@@ -92,6 +94,7 @@ public class VerificationCode_Fragment extends Fragment {
 
     // upload pharmacy info into Database
     private void PharmaRef(String ph_name,String ph_email,String ph_phone,String ph_address,String ph_pass){
+        codeBinding.setIsLoading(true);
         String ph_distance = String.valueOf(RandNumbDistance(1,500));
         String devicetoken= FirebaseInstanceId.getInstance().getToken();
         pharmacy_data data = new pharmacy_data(
@@ -108,6 +111,7 @@ public class VerificationCode_Fragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
+                    codeBinding.setIsLoading(false);
                     SharedPrefranceManager.getInastance(getContext()).saveUser("pharma",ph_name,ph_phone,ph_address);
                     NavDirections act = VerificationCode_FragmentDirections.Companion.actionVerificationCodeFragmentToPharmacyMainScreenFragment();
                     Navigation.findNavController(getView()).navigate(act);

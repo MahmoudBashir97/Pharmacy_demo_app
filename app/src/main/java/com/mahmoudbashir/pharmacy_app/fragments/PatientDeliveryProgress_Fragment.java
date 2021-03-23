@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,24 @@ public class PatientDeliveryProgress_Fragment extends Fragment implements Update
         deliveryProgressBinding.backBtn.setOnClickListener(v -> {
             Navigation.findNavController(v).navigateUp();
         });
+
+        //using swipe to refresh
+        setDataRefreshing();
+
         return deliveryProgressBinding.getRoot();
+    }
+
+    private void setDataRefreshing(){
+        deliveryProgressBinding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRequestsData();
+                if (mlist.size() ==0){
+                    deliveryProgressBinding.setIsLoading(true);
+                }
+                deliveryProgressBinding.pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     private void getRequestsData(){

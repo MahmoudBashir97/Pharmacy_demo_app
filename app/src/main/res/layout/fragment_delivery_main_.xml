@@ -46,16 +46,21 @@
                 />
         </LinearLayout>
     </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_delivery_requests"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rel_bar"
-        android:layout_marginTop="15dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/single_item_pharmacy_notification"
-        />
+        android:layout_marginTop="15dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_delivery_requests"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/single_item_pharmacy_notification"
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <TextView
         android:id="@+id/txt_no_requests"
         android:layout_width="wrap_content"

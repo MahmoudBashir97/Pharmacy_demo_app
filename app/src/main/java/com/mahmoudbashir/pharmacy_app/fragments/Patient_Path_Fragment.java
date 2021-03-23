@@ -11,6 +11,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +60,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
     PatientPharmacyList_adapter pharmacyListAdapter;
     View v;
     ProgressBar prog_bar;
-
+    SwipeRefreshLayout pullToRefresh;
     public Patient_Path_Fragment() {
         // Required empty public constructor
     }
@@ -74,6 +75,7 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
         show_menu = v.findViewById(R.id.show_menu);
         show_notifications_btn = v.findViewById(R.id.show_notifications_btn);
         prog_bar = v.findViewById(R.id.prog_bar);
+        pullToRefresh = v.findViewById(R.id.pullToRefresh);
         NavigationView navigationView = v.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -95,8 +97,20 @@ public class Patient_Path_Fragment extends Fragment implements NavigationView.On
         getPharmacyList();
         pharmacyListAdapter = new PatientPharmacyList_adapter(getContext(),modelList);
         recPharmacyList.setAdapter(pharmacyListAdapter);
+        //using swipe to refresh
+        setDataRefreshing();
 
         return v;
+    }
+
+    private void setDataRefreshing(){
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getPharmacyList();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override

@@ -35,15 +35,14 @@ import com.mahmoudbashir.pharmacy_app.models.patient_data;
 import com.mahmoudbashir.pharmacy_app.models.pharmacy_data;
 import com.mahmoudbashir.pharmacy_app.storage.SharedPrefranceManager;
 
-import java.util.HashMap;
 import java.util.Random;
 
 
 public class Registeration_Fragment extends Fragment {
 
     FragmentRegisterationBinding registerationBinding;
-    DatabaseReference pharma_ref, deliveryRef, patientRef, sendTokenRef;
-
+    DatabaseReference pharma_ref, deliveryRef, patientRef, sendTokenRef,checkref;
+    String status ="failed";
     FirebaseAuth auth;
 
     public Registeration_Fragment() {
@@ -58,13 +57,10 @@ public class Registeration_Fragment extends Fragment {
         FirebaseApp.initializeApp(getContext());
         auth = FirebaseAuth.getInstance();
         pharma_ref= FirebaseDatabase.getInstance().getReference("pharmacy");
+        checkref= FirebaseDatabase.getInstance().getReference();
         deliveryRef = FirebaseDatabase.getInstance().getReference("delivery");
         patientRef = FirebaseDatabase.getInstance().getReference("patient");
 
-
-        /* NavDirections act = Registeration_FragmentDirections.Companion.actionRegisterationFragmentToPharmacyMainScreenFragment();
-        Navigation.createNavigateOnClickListener(act);
-        //Navigation.findNavController(v).navigate(act);*/
         registerationBinding.setIsLogin(true);
         String st_regist_type = Registeration_FragmentArgs.fromBundle(getArguments()).getRegistType();
 
@@ -87,6 +83,7 @@ public class Registeration_Fragment extends Fragment {
         }
 
         registerationBinding.signUpBtn.setOnClickListener(v -> {
+
             if (st_regist_type.equals("pharma")) {
                 if (TextUtils.isEmpty(registerationBinding.edtRegistName.getText())) {
                     registerationBinding.edtRegistName.setError("Please Enter Pharmacy Name!");
@@ -103,7 +100,7 @@ public class Registeration_Fragment extends Fragment {
                 }/*else if (registerationBinding.edtRegistPhone.length() <11 || registerationBinding.edtRegistPhone.length() >11){
                     registerationBinding.edtRegistPhone.setError("Please Enter Pharmacy Phone with correctly , 11 numeric starts with 01xxxxxxxxx!");
                     registerationBinding.edtRegistPhone.requestFocus();
-                }*/ else if (TextUtils.isEmpty(registerationBinding.edtRegistPass.getText())) {
+                }*/else if (TextUtils.isEmpty(registerationBinding.edtRegistPass.getText())) {
                     registerationBinding.edtRegistPass.setError("Please Enter Pharmacy Password!");
                     registerationBinding.edtRegistPass.requestFocus();
                 } else {
@@ -111,25 +108,7 @@ public class Registeration_Fragment extends Fragment {
                     String ph_phone = "+2" + registerationBinding.edtRegistPhone.getText().toString();
                     String email = registerationBinding.edtRegistEmail.getText().toString();
                     String pass = registerationBinding.edtRegistPass.getText().toString();
-
-                    auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                                                               @Override
-                                                                                               public void onComplete(@NonNull Task<AuthResult> task) {
-                                                                                                   if (task.isSuccessful()) {
-                                                                                                       PharmaRef(v,registerationBinding.edtRegistName.getText().toString(),
-                                                                                                               registerationBinding.edtRegistEmail.getText().toString(),
-                                                                                                               registerationBinding.edtRegistPhone.getText().toString(),
-                                                                                                               registerationBinding.edtRegistPharmaAddress.getText().toString(),
-                                                                                                               registerationBinding.edtRegistPass.getText().toString());
-                                                                                                   }
-                                                                                               }
-                                                                                           }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            registerationBinding.setIsLoading(false);
-                            Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    checkPhoneRedundant(v,ph_phone,email,pass);
 
                 }
             } else if (st_regist_type.equals("delivery")) {
@@ -186,7 +165,6 @@ public class Registeration_Fragment extends Fragment {
                     registerationBinding.edtRegistPass.setError("Please Enter Your Password!");
                     registerationBinding.edtRegistPass.requestFocus();
                 } else {
-                    //Toast.makeText(getContext(), "registered", Toast.LENGTH_SHORT).show();
                     //do navigate here ...!
                     String ph_phone = "+2" + registerationBinding.edtRegistPhone.getText().toString();
                     String email = registerationBinding.edtRegistEmail.getText().toString();
@@ -253,10 +231,50 @@ public class Registeration_Fragment extends Fragment {
 
         return registerationBinding.getRoot();
     }
+    private void checkPhoneRedundant(View v, String ph,String email,String pass){
+        registerationBinding.setIsLoading(true);
+        checkref.child("pharmacy").child("pharmacy_list").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() &&  snapshot.hasChildren()){
 
+                    if (snapshot.hasChild(ph))
+                    {
+                        registerationBinding.setIsLoading(false);
+                        registerationBinding.edtRegistPhone.setError( "Sorry, This Phone no. has been registered before!!");
+                        registerationBinding.edtRegistPhone.requestFocus();
+                        Log.d("ph_check", "Failed ");
+                    }
+                    else {
+                          auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                PharmaRef(v,registerationBinding.edtRegistName.getText().toString(),
+                                                        registerationBinding.edtRegistEmail.getText().toString(),
+                                                        ph,
+                                                        registerationBinding.edtRegistPharmaAddress.getText().toString(),
+                                                        registerationBinding.edtRegistPass.getText().toString());
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            registerationBinding.setIsLoading(false);
+                                            Toast.makeText(getContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                error.getMessage();
+            }
+        });
+    }
     private void pharmaLogin(View v, String pharma_email, String pharma_pass) {
         registerationBinding.setIsLoading(true);
-
         auth.signInWithEmailAndPassword(pharma_email, pharma_pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

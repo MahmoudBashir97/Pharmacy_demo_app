@@ -40,6 +40,7 @@
             android:textSize="13sp"
             android:layout_below="@+id/reply_now_btn"
             android:layout_alignParentEnd="true"
+            android:visibility="gone"
             />
 
     </RelativeLayout>

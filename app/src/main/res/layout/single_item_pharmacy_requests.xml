@@ -76,6 +76,7 @@
                     android:textSize="14sp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
+                    android:visibility="invisible"
                     />
 
             </RelativeLayout>

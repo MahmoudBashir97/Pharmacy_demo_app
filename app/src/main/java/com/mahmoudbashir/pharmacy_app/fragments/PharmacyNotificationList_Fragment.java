@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,10 +55,28 @@ public class PharmacyNotificationList_Fragment extends Fragment {
         adapter = new Pharmacy_notification_adapter(getContext(),mlist);
         notificationListBinding.recNotification.setAdapter(adapter);
 
+        //using swipe to refresh
+        setDataRefreshing();
+
+
         return notificationListBinding.getRoot();
+    }
+
+    private void setDataRefreshing(){
+        notificationListBinding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRequests();
+                if (mlist.size() ==0){
+                    notificationListBinding.setIsLoading(true);
+                }
+                notificationListBinding.pullToRefresh.setRefreshing(false);
+            }
+        });
     }
     private void getRequests(){
         mlist.clear();
+        notificationListBinding.setIsLoading(true);
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -67,6 +86,7 @@ public class PharmacyNotificationList_Fragment extends Fragment {
                     if (myPhonNo.equals(ph) && status.equals("toPharma")){
                         RequestData data = snapshot.getValue(RequestData.class);
                         mlist.add(data);
+                        notificationListBinding.setIsLoading(false);
                     }
                     adapter.notifyDataSetChanged();
                 }

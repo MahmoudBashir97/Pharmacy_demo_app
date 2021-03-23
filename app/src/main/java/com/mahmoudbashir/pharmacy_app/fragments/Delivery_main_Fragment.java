@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
     RecyclerView rec_delivery_requests;
     Delivery_RequestAdapter adapter;
     delivery_accept_requestsInterface accept_requestsInterface;
+    SwipeRefreshLayout pullToRefresh;
     public Delivery_main_Fragment() {
         // Required empty public constructor
     }
@@ -75,6 +77,7 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
         txt_no_requests = v.findViewById(R.id.txt_no_requests);
         show_notifications_btn = v.findViewById(R.id.show_notifications_btn);
         rec_delivery_requests = v.findViewById(R.id.rec_delivery_requests);
+        pullToRefresh = v.findViewById(R.id.pullToRefresh);
         rec_delivery_requests.setHasFixedSize(true);
 
         txt_no_requests.setVisibility(View.GONE);
@@ -140,7 +143,23 @@ public class Delivery_main_Fragment extends Fragment implements NavigationView.O
             drawerLayout.open();
         });
 
+        //refresh page for getting new requests
+       setDataRefreshing();
+
         return v;
+    }
+
+    private void setDataRefreshing(){
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRequestsData();
+                if (mlist.size() == 0){
+                    txt_no_requests.setVisibility(View.VISIBLE);
+                }
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override

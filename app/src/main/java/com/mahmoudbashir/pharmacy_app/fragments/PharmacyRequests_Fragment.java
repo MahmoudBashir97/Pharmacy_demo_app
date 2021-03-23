@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,24 @@ public class PharmacyRequests_Fragment extends Fragment {
         pharmacyRequestsBinding.recRequests.setAdapter(adapter);
         getRequests();
 
+        //using swipe to refresh
+        setDataRefreshing();
+
+
         return pharmacyRequestsBinding.getRoot();
+    }
+
+    private void setDataRefreshing(){
+        pharmacyRequestsBinding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRequests();
+                if (mlist.size() ==0){
+                    pharmacyRequestsBinding.setIsLoading(true);
+                }
+                pharmacyRequestsBinding.pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     private void getRequests(){

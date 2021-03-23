@@ -97,7 +97,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:max="100"
-                android:progress="45"
+                android:progress="0"
                 android:layout_marginLeft="65dp"
                 android:layout_marginTop="38dp"/>
             <LinearLayout
@@ -130,7 +130,8 @@
                     android:layout_height="wrap_content"
                     android:text="12/01/2021"
                     android:textColor="#A7A7A7"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:visibility="invisible"/>
             </LinearLayout>
 
             <LinearLayout
